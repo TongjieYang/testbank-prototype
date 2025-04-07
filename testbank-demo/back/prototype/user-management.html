@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>国网考试题库后台管理系统 - 用户管理</title>
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+    <div class="layout">
+        <!-- 侧边栏 -->
+        <div class="sidebar">
+            <div class="system-logo">
+                <img src="https://via.placeholder.com/32x32?text=Logo" alt="Logo">
+                <span class="system-logo-text">国网考试题库</span>
+            </div>
+            <ul class="menu">
+                <li class="menu-item">
+                    <a href="dashboard.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-speedometer2"></i></span>
+                        <span class="menu-text">仪表盘</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="category-management.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-folder2"></i></span>
+                        <span class="menu-text">分类管理</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="question-management.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-file-earmark-text"></i></span>
+                        <span class="menu-text">题目管理</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="tag-management.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-tags"></i></span>
+                        <span class="menu-text">标签管理</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="activation-code.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-key"></i></span>
+                        <span class="menu-text">激活码管理</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="user-management.html" class="menu-link active">
+                        <span class="menu-icon"><i class="bi bi-people"></i></span>
+                        <span class="menu-text">用户管理</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="data-analysis.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-bar-chart"></i></span>
+                        <span class="menu-text">数据分析</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="system-settings.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-gear"></i></span>
+                        <span class="menu-text">系统设置</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 主内容区 -->
+        <div class="main-content">
+            <!-- 顶部导航栏 -->
+            <div class="navbar">
+                <div class="nav-left">
+                    <button class="btn btn-secondary" id="toggle-sidebar">
+                        <i class="bi bi-list"></i>
+                    </button>
+                    <div class="breadcrumb">
+                        <div class="breadcrumb-item"><a href="dashboard.html">首页</a></div>
+                        <div class="breadcrumb-item active">用户管理</div>
+                    </div>
+                </div>
+                <div class="nav-right">
+                    <div class="search-box">
+                        <span class="search-icon"><i class="bi bi-search"></i></span>
+                        <input type="text" class="search-input" placeholder="搜索用户...">
+                    </div>
+                    <div class="user-dropdown" style="margin-left: 20px;">
+                        <span><i class="bi bi-person-circle"></i> 管理员 <i class="bi bi-chevron-down"></i></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 内容区域 -->
+            <div class="content">
+                <div class="page-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                    <h1>用户管理</h1>
+                    <div>
+                        <button class="btn btn-secondary" style="margin-right: 12px;">
+                            <i class="bi bi-download"></i> 导出用户数据
+                        </button>
+                        <button class="btn btn-primary" id="create-user">
+                            <i class="bi bi-plus"></i> 添加用户
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 统计卡片 -->
+                <div class="dashboard-cards">
+                    <div class="stat-card">
+                        <div class="stat-card-title">总用户数</div>
+                        <div class="stat-card-value">4,782</div>
+                        <div class="stat-card-desc">
+                            <span class="trend-up"><i class="bi bi-arrow-up"></i> 8.5% 较上月</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-title">本月新增</div>
+                        <div class="stat-card-value">374</div>
+                        <div class="stat-card-desc">
+                            <span class="trend-up"><i class="bi bi-arrow-up"></i> 12.3% 较上月</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-title">活跃用户</div>
+                        <div class="stat-card-value">1,952</div>
+                        <div class="stat-card-desc">
+                            <span>活跃率: 40.8%</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-title">付费用户</div>
+                        <div class="stat-card-value">857</div>
+                        <div class="stat-card-desc">
+                            <span>付费率: 17.9%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 筛选器 -->
+                <div class="card" style="margin-bottom: 24px;">
+                    <div class="card-header">
+                        <div class="card-title">筛选条件</div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 16px;">
+                        <div class="form-item" style="margin-bottom: 8px;">
+                            <label for="filter-status">账号状态</label>
+                            <select id="filter-status">
+                                <option value="">所有状态</option>
+                                <option value="active" selected>正常</option>
+                                <option value="disabled">已禁用</option>
+                                <option value="unverified">未验证</option>
+                            </select>
+                        </div>
+                        <div class="form-item" style="margin-bottom: 8px;">
+                            <label for="filter-user-type">用户类型</label>
+                            <select id="filter-user-type">
+                                <option value="">所有类型</option>
+                                <option value="free" selected>免费用户</option>
+                                <option value="paid">付费用户</option>
+                                <option value="expired">已过期用户</option>
+                            </select>
+                        </div>
+                        <div class="form-item" style="margin-bottom: 8px;">
+                            <label for="filter-register-method">注册方式</label>
+                            <select id="filter-register-method">
+                                <option value="">所有方式</option>
+                                <option value="wechat" selected>微信</option>
+                                <option value="phone">手机号</option>
+                                <option value="email">邮箱</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 16px;">
+                        <div class="form-item" style="margin-bottom: 8px;">
+                            <label for="filter-date-start">注册时间起</label>
+                            <input type="date" id="filter-date-start" value="2024-03-01">
+                        </div>
+                        <div class="form-item" style="margin-bottom: 8px;">
+                            <label for="filter-date-end">注册时间止</label>
+                            <input type="date" id="filter-date-end" value="2024-04-07">
+                        </div>
+                        <div class="form-item" style="margin-bottom: 8px;">
+                            <label for="filter-access">已购题库</label>
+                            <select id="filter-access">
+                                <option value="">所有题库</option>
+                                <option value="1" selected>电力系统基础</option>
+                                <option value="2">配电技术</option>
+                                <option value="3">安全管理</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: flex-end;">
+                        <button class="btn btn-secondary" style="margin-right: 12px;">重置</button>
+                        <button class="btn btn-primary">应用筛选</button>
+                    </div>
+                </div>
+                
+                <!-- 用户列表 -->
+                <div class="card">
+                    <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+                        <div class="card-title">用户列表</div>
+                        <div>
+                            <span style="margin-right: 16px;">共 4,782 条记录</span>
+                            <button class="btn btn-secondary btn-sm" style="margin-right: 8px;">
+                                <i class="bi bi-arrow-repeat"></i> 刷新
+                            </button>
+                            <div class="dropdown" style="display: inline-block;">
+                                <button class="btn btn-secondary btn-sm">
+                                    批量操作 <i class="bi bi-chevron-down"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th style="width: 40px;">
+                                    <input type="checkbox" id="select-all">
+                                </th>
+                                <th style="width: 60px;">ID</th>
+                                <th style="width: 80px;">头像</th>
+                                <th style="width: 100px;">用户名</th>
+                                <th style="width: 140px;">手机号/邮箱</th>
+                                <th style="width: 80px;">状态</th>
+                                <th style="width: 100px;">用户类型</th>
+                                <th style="width: 120px;">注册时间</th>
+                                <th style="width: 120px;">最近登录</th>
+                                <th style="width: 120px;">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- 用户1 -->
+                            <tr>
+                                <td><input type="checkbox" class="select-item"></td>
+                                <td>10045</td>
+                                <td><img src="https://via.placeholder.com/32x32" alt="用户头像" class="avatar"></td>
+                                <td>张三</td>
+                                <td>138****5678</td>
+                                <td><span class="tag tag-success">正常</span></td>
+                                <td>付费用户</td>
+                                <td>2024-01-18</td>
+                                <td>2024-04-07</td>
+                                <td>
+                                    <button class="btn-icon view-user" title="查看" data-id="10045"><i class="bi bi-eye"></i></button>
+                                    <button class="btn-icon edit-user" title="编辑" data-id="10045"><i class="bi bi-pencil"></i></button>
+                                    <button class="btn-icon" title="禁用" data-id="10045"><i class="bi bi-slash-circle"></i></button>
+                                </td>
+                            </tr>
+                            
+                            <!-- 用户2 -->
+                            <tr>
+                                <td><input type="checkbox" class="select-item"></td>
+                                <td>10046</td>
+                                <td><img src="https://via.placeholder.com/32x32" alt="用户头像" class="avatar"></td>
+                                <td>李四</td>
+                                <td>user2@example.com</td>
+                                <td><span class="tag tag-success">正常</span></td>
+                                <td>免费用户</td>
+                                <td>2024-02-05</td>
+                                <td>2024-04-05</td>
+                                <td>
+                                    <button class="btn-icon view-user" title="查看" data-id="10046"><i class="bi bi-eye"></i></button>
+                                    <button class="btn-icon edit-user" title="编辑" data-id="10046"><i class="bi bi-pencil"></i></button>
+                                    <button class="btn-icon" title="禁用" data-id="10046"><i class="bi bi-slash-circle"></i></button>
+                                </td>
+                            </tr>
+                            
+                            <!-- 用户3 -->
+                            <tr>
+                                <td><input type="checkbox" class="select-item"></td>
+                                <td>10047</td>
+                                <td><img src="https://via.placeholder.com/32x32" alt="用户头像" class="avatar"></td>
+                                <td>王五</td>
+                                <td>159****1234</td>
+                                <td><span class="tag tag-warning">未验证</span></td>
+                                <td>免费用户</td>
+                                <td>2024-03-20</td>
+                                <td>2024-03-20</td>
+                                <td>
+                                    <button class="btn-icon view-user" title="查看" data-id="10047"><i class="bi bi-eye"></i></button>
+                                    <button class="btn-icon edit-user" title="编辑" data-id="10047"><i class="bi bi-pencil"></i></button>
+                                    <button class="btn-icon" title="禁用" data-id="10047"><i class="bi bi-slash-circle"></i></button>
+                                </td>
+                            </tr>
+                            
+                            <!-- 用户4 -->
+                            <tr>
+                                <td><input type="checkbox" class="select-item"></td>
+                                <td>10048</td>
+                                <td><img src="https://via.placeholder.com/32x32" alt="用户头像" class="avatar"></td>
+                                <td>赵六</td>
+                                <td>user4@example.com</td>
+                                <td><span class="tag tag-danger">已禁用</span></td>
+                                <td>已过期用户</td>
+                                <td>2023-11-10</td>
+                                <td>2024-03-01</td>
+                                <td>
+                                    <button class="btn-icon view-user" title="查看" data-id="10048"><i class="bi bi-eye"></i></button>
+                                    <button class="btn-icon edit-user" title="编辑" data-id="10048"><i class="bi bi-pencil"></i></button>
+                                    <button class="btn-icon" title="启用" data-id="10048"><i class="bi bi-check-circle"></i></button>
+                                </td>
+                            </tr>
+                            
+                            <!-- 用户5 -->
+                            <tr>
+                                <td><input type="checkbox" class="select-item"></td>
+                                <td>10049</td>
+                                <td><img src="https://via.placeholder.com/32x32" alt="用户头像" class="avatar"></td>
+                                <td>孙七</td>
+                                <td>187****9876</td>
+                                <td><span class="tag tag-success">正常</span></td>
+                                <td>付费用户</td>
+                                <td>2024-03-28</td>
+                                <td>2024-04-06</td>
+                                <td>
+                                    <button class="btn-icon view-user" title="查看" data-id="10049"><i class="bi bi-eye"></i></button>
+                                    <button class="btn-icon edit-user" title="编辑" data-id="10049"><i class="bi bi-pencil"></i></button>
+                                    <button class="btn-icon" title="禁用" data-id="10049"><i class="bi bi-slash-circle"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <!-- 分页 -->
+                    <div style="display: flex; justify-content: space-between; padding: 16px;">
+                        <div>
+                            <label style="margin-right: 8px;">每页显示:</label>
+                            <select style="width: 80px;">
+                                <option>10</option>
+                                <option selected>20</option>
+                                <option>50</option>
+                                <option>100</option>
+                            </select>
+                        </div>
+                        <div class="pagination">
+                            <button class="btn-page" disabled><i class="bi bi-chevron-double-left"></i></button>
+                            <button class="btn-page" disabled><i class="bi bi-chevron-left"></i></button>
+                            <button class="btn-page active">1</button>
+                            <button class="btn-page">2</button>
+                            <button class="btn-page">3</button>
+                            <span>...</span>
+                            <button class="btn-page">240</button>
+                            <button class="btn-page"><i class="bi bi-chevron-right"></i></button>
+                            <button class="btn-page"><i class="bi bi-chevron-double-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 页脚 -->
+            <div class="footer">
+                国网考试题库后台管理系统 &copy; 2024 国家电网有限公司
+            </div>
+        </div>
+    </div>
+    
+    <!-- 创建/编辑用户弹窗 -->
+    <div class="modal" id="user-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">添加用户</h3>
+                    <button class="modal-close"><i class="bi bi-x-lg"></i></button>
+                </div>
+                <div class="modal-body">
+                    <form id="user-form">
+                        <div class="form-item">
+                            <label for="user-name">用户名</label>
+                            <input type="text" id="user-name" name="username" placeholder="输入用户名">
+                        </div>
+                        
+                        <div class="form-item">
+                            <label for="user-phone">手机号</label>
+                            <input type="text" id="user-phone" name="phone" placeholder="输入手机号">
+                        </div>
+                        
+                        <div class="form-item">
+                            <label for="user-email">邮箱</label>
+                            <input type="email" id="user-email" name="email" placeholder="输入邮箱">
+                        </div>
+                        
+                        <div class="form-item">
+                            <label for="user-status">账号状态</label>
+                            <select id="user-status" name="status">
+                                <option value="active" selected>正常</option>
+                                <option value="disabled">禁用</option>
+                                <option value="unverified">未验证</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-item">
+                            <label for="user-type">用户类型</label>
+                            <select id="user-type" name="type">
+                                <option value="free" selected>免费用户</option>
+                                <option value="paid">付费用户</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-item">
+                            <label>用户权限</label>
+                            <div style="margin-bottom: 8px;">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="permissions[]" value="basic" checked>
+                                    <span>基础权限 (查看题目)</span>
+                                </label>
+                            </div>
+                            <div style="margin-bottom: 8px;">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="permissions[]" value="simulation">
+                                    <span>模拟考试</span>
+                                </label>
+                            </div>
+                            <div>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="permissions[]" value="advanced">
+                                    <span>高级功能 (错题本、智能推荐)</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-item">
+                            <label>可访问题库</label>
+                            <div style="margin-bottom: 8px;">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="banks[]" value="1" checked>
+                                    <span>电力系统基础</span>
+                                </label>
+                            </div>
+                            <div style="margin-bottom: 8px;">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="banks[]" value="2">
+                                    <span>配电技术</span>
+                                </label>
+                            </div>
+                            <div>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="banks[]" value="3">
+                                    <span>安全管理</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-item">
+                            <label for="user-expire">会员过期时间</label>
+                            <input type="date" id="user-expire" name="expireDate">
+                        </div>
+                        
+                        <div class="form-item">
+                            <label for="user-note">备注</label>
+                            <textarea id="user-note" name="note" rows="2" placeholder="输入备注信息"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 用户详情弹窗 -->
+    <div class="modal" id="user-detail-modal">
+        <div class="modal-dialog" style="width: 700px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">用户详情</h3>
+                    <button class="modal-close"><i class="bi bi-x-lg"></i></button>
+                </div>
+                <div class="modal-body">
+                    <div style="display: flex; gap: 20px; margin-bottom: 20px;">
+                        <div style="flex-shrink: 0; text-align: center;">
+                            <img src="https://via.placeholder.com/120x120" alt="用户头像" style="border-radius: 60px; margin-bottom: 10px;">
+                            <div style="font-weight: bold;">张三</div>
+                            <div style="margin-top: 5px;"><span class="tag tag-success">正常</span></div>
+                            <div style="margin-top: 5px;"><span class="tag tag-primary">付费用户</span></div>
+                        </div>
+                        
+                        <div style="flex-grow: 1;">
+                            <h4 style="margin-bottom: 10px;">基本信息</h4>
+                            <div style="display: grid; grid-template-columns: 120px 1fr; row-gap: 12px;">
+                                <div>用户ID:</div>
+                                <div>10045</div>
+                                <div>手机号:</div>
+                                <div>138****5678</div>
+                                <div>邮箱:</div>
+                                <div>zs***@example.com</div>
+                                <div>注册时间:</div>
+                                <div>2024-01-18 15:23:45</div>
+                                <div>注册方式:</div>
+                                <div>微信小程序</div>
+                                <div>最近登录:</div>
+                                <div>2024-04-07 09:45:12</div>
+                                <div>会员状态:</div>
+                                <div>有效，到期时间: 2025-01-17</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                        <div>
+                            <h4 style="margin-bottom: 10px;">学习数据</h4>
+                            <div style="display: grid; grid-template-columns: 120px 1fr; row-gap: 12px;">
+                                <div>累计学习:</div>
+                                <div>32小时47分钟</div>
+                                <div>答题数量:</div>
+                                <div>1,253题</div>
+                                <div>正确率:</div>
+                                <div>78.6%</div>
+                                <div>错题数量:</div>
+                                <div>268题</div>
+                                <div>收藏题目:</div>
+                                <div>145题</div>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 style="margin-bottom: 10px;">使用情况</h4>
+                            <div style="display: grid; grid-template-columns: 120px 1fr; row-gap: 12px;">
+                                <div>登录次数:</div>
+                                <div>87次</div>
+                                <div>最近7天:</div>
+                                <div>5次登录</div>
+                                <div>平均时长:</div>
+                                <div>每次23分钟</div>
+                                <div>使用设备:</div>
+                                <div>iPhone 14 Pro</div>
+                                <div>主要题库:</div>
+                                <div>电力系统基础</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h4 style="margin-bottom: 10px;">学习趋势</h4>
+                    <div style="height: 200px; background-color: #f5f5f5; display: flex; justify-content: center; align-items: center; border-radius: 4px; margin-bottom: 20px;">
+                        图表区域 - 用户学习时间与正确率趋势
+                    </div>
+                    
+                    <h4 style="margin-bottom: 10px;">购买记录</h4>
+                    <div style="border: 1px solid var(--border-color); border-radius: 4px; max-height: 150px; overflow-y: auto; margin-bottom: 20px;">
+                        <table class="table" style="margin-bottom: 0;">
+                            <thead>
+                                <tr>
+                                    <th>订单号</th>
+                                    <th>激活码</th>
+                                    <th>题库</th>
+                                    <th>购买时间</th>
+                                    <th>到期时间</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ORD24011801</td>
+                                    <td>ABCD-EFGH-IJKL-MNOP</td>
+                                    <td>电力系统基础</td>
+                                    <td>2024-01-18</td>
+                                    <td>2025-01-17</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <h4 style="margin-bottom: 10px;">操作记录</h4>
+                    <div style="border: 1px solid var(--border-color); border-radius: 4px; max-height: 150px; overflow-y: auto;">
+                        <table class="table" style="margin-bottom: 0;">
+                            <thead>
+                                <tr>
+                                    <th>操作时间</th>
+                                    <th>操作类型</th>
+                                    <th>操作详情</th>
+                                    <th>操作人</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2024-01-18 15:23:45</td>
+                                    <td>注册</td>
+                                    <td>用户通过微信小程序注册</td>
+                                    <td>系统</td>
+                                </tr>
+                                <tr>
+                                    <td>2024-01-18 15:30:12</td>
+                                    <td>激活码使用</td>
+                                    <td>使用激活码 ABCD-EFGH-IJKL-MNOP</td>
+                                    <td>用户</td>
+                                </tr>
+                                <tr>
+                                    <td>2024-03-15 10:42:08</td>
+                                    <td>信息修改</td>
+                                    <td>修改用户手机号码</td>
+                                    <td>管理员</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    <button class="btn btn-primary edit-user">编辑用户</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 侧边栏切换
+        document.getElementById('toggle-sidebar').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.toggle('sidebar-collapsed');
+        });
+        
+        // 全选/取消全选
+        document.getElementById('select-all').addEventListener('change', function() {
+            const checked = this.checked;
+            document.querySelectorAll('.select-item').forEach(function(item) {
+                item.checked = checked;
+            });
+        });
+        
+        // 创建用户
+        document.getElementById('create-user').addEventListener('click', function() {
+            document.getElementById('user-modal').classList.add('show');
+        });
+        
+        // 查看用户详情
+        document.querySelectorAll('.view-user').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                document.getElementById('user-detail-modal').classList.add('show');
+            });
+        });
+        
+        // 编辑用户
+        document.querySelectorAll('.edit-user').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                document.getElementById('user-modal').classList.add('show');
+                document.querySelector('#user-modal .modal-title').textContent = '编辑用户';
+            });
+        });
+        
+        // 关闭弹窗
+        document.querySelectorAll('.modal-close, .btn[data-dismiss="modal"]').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.modal').forEach(function(modal) {
+                    modal.classList.remove('show');
+                });
+            });
+        });
+        
+        // 当点击modal背景时关闭modal
+        document.querySelectorAll('.modal').forEach(function(modal) {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('show');
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>国网考试题库微信小程序 - 个人中心</title>
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入动效样式 -->
+    <link rel="stylesheet" href="./animation.css">
+    <link rel="stylesheet" href="./pure-nav.css">
+    <link rel="stylesheet" href="./debug.css">
+    <style>
+        /* 微信小程序风格的自定义样式 */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background-color: #f5f5f5;
+        }
+        .mp-icon {
+            display: inline-block;
+            width: 1.5rem;
+            height: 1.5rem;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+        .icon-home { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" /></svg>'); }
+        .icon-book { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" /></svg>'); }
+        .icon-bookmark { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" /></svg>'); }
+        .icon-user { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg>'); }
+        .icon-calendar { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" /></svg>'); }
+        .icon-star-filled { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clip-rule="evenodd" /></svg>'); }
+        .icon-chevron-right { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg>'); }
+        .icon-key { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 0 1 3 3m3 0a6 6 0 0 1-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1 1 21.75 8.25Z" /></svg>'); }
+        .icon-cog { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /></svg>'); }
+        .icon-bell { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" /></svg>'); }
+        .icon-chart { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" /></svg>'); }
+        
+        /* 知识点掌握图表动画 */
+        @keyframes bar-grow {
+            from { height: 0; }
+            to { height: var(--target-height); }
+        }
+        
+        .knowledge-bar {
+            position: relative;
+            height: 0;
+            transition: height 1s ease-out;
+            animation: bar-grow 1.2s ease-out forwards;
+        }
+        
+        /* 雷达图动画 */
+        @keyframes radar-expand {
+            from { 
+                clip-path: circle(0% at center); 
+                opacity: 0;
+            }
+            to { 
+                clip-path: circle(100% at center); 
+                opacity: 1;
+            }
+        }
+        
+        .radar-chart {
+            animation: radar-expand 1.5s ease-out forwards;
+        }
+        
+        /* 数值增长动画 */
+        .number-counter {
+            display: inline-block;
+            animation: fade-in 0.8s ease-out;
+        }
+        
+        /* 知识点标签动画 */
+        .knowledge-tag {
+            transition: all 0.3s ease;
+        }
+        
+        .knowledge-tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* 圆环进度条动画 */
+        @keyframes circle-progress {
+            from { stroke-dasharray: 0 100; }
+            to { stroke-dasharray: var(--percent) 100; }
+        }
+        
+        .circle-progress {
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+            transition: stroke-dasharray 1.5s ease-out;
+            animation: circle-progress 1.5s ease-out forwards;
+        }
+        
+        /* 详情面板展开动画 */
+        @keyframes panel-expand {
+            from { 
+                opacity: 0; 
+                transform: translateY(-10px);
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-expand {
+            animation: panel-expand 0.3s ease-out forwards;
+        }
+        
+        /* 隐藏元素 */
+        .hidden {
+            display: none;
+        }
+        
+        /* 按钮点击动画 */
+        .interactive-card {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .interactive-card:active {
+            background-color: rgba(0, 0, 0, 0.05);
+            transform: scale(0.98);
+        }
+        
+        /* 波纹效果 */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.1);
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            z-index: 0;
+        }
+        
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+        
+        /* 玻璃卡片效果 */
+        .glass-card {
+            background-color: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .glass-card-dark {
+            background-color: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="max-w-md mx-auto page-container">
+        <!-- 用户信息卡片 -->
+        <div class="relative bg-gradient-to-r from-blue-600 to-blue-800 text-white p-5">
+            <div class="flex items-center">
+                <div class="w-16 h-16 rounded-full bg-white flex-shrink-0 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="用户头像" class="w-full h-full object-cover">
+                </div>
+                <div class="ml-4 flex-1">
+                    <div class="text-lg font-bold">张工程师</div>
+                    <div class="text-sm opacity-90 mt-1">国网杭州供电公司</div>
+                    <div class="text-xs opacity-80 mt-0.5">高级配电运维工程师</div>
+                </div>
+            </div>
+            
+            <!-- 学习统计数据 - 半透明风格 -->
+            <div class="flex mt-6 glass-card-dark rounded-lg p-3 justify-between">
+                <div class="text-center">
+                    <div class="text-lg font-bold" id="studyDays">15</div>
+                    <div class="text-xs mt-1">学习天数</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-lg font-bold" id="completedQuestions">428</div>
+                    <div class="text-xs mt-1">已完成题目</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-lg font-bold" id="knowledgePoints">62</div>
+                    <div class="text-xs mt-1">掌握知识点</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 知识点掌握统计 - 半透明卡片 -->
+        <div class="p-4 glass-card mx-4 mt-4 mb-4">
+            <div class="flex justify-between items-center mb-3">
+                <div class="font-medium">知识点掌握</div>
+                <a href="#knowledgeDetailPanel" class="text-xs text-blue-600" id="viewDetailBtn">查看详情</a>
+            </div>
+            
+            <!-- 总体掌握度状态 -->
+            <div class="flex items-center justify-between bg-gray-50/70 p-3 rounded-lg interactive-card">
+                <div>
+                    <div class="text-sm font-medium">总体掌握度</div>
+                    <div class="text-xs text-gray-500 mt-1">已掌握62个知识点</div>
+                </div>
+                <div class="relative w-16 h-16">
+                    <svg class="w-full h-full" viewBox="0 0 36 36">
+                        <circle cx="18" cy="18" r="16" fill="none" stroke-width="2" stroke="#e5e7eb" />
+                        <circle cx="18" cy="18" r="16" fill="none" stroke-width="2" stroke="#3b82f6" stroke-dasharray="78 100" stroke-linecap="round" class="circle-progress" style="--percent: 78;" />
+                        <text x="18" y="18.5" text-anchor="middle" dominant-baseline="middle" fill="#3b82f6" font-size="8" font-weight="bold" class="percent-text">0%</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 知识点详情模块 - 半透明卡片 -->
+        <div id="knowledgeDetailPanel" class="glass-card mx-4 p-4 mb-4 hidden">
+            <div class="flex justify-between items-center mb-3">
+                <div class="font-medium">知识点详情分析</div>
+                <a href="#" class="text-xs text-gray-500 flex items-center" id="closeDetailBtn">
+                    关闭
+                </a>
+            </div>
+            
+            <!-- 类别掌握度预览 -->
+            <div class="bg-gray-50/70 rounded-lg p-3 mb-3">
+                <div class="flex justify-between items-center mb-2">
+                    <div class="text-xs text-gray-600">类别掌握度</div>
+                    <div class="text-xs text-blue-600">5/7类别</div>
+                </div>
+                <div class="flex justify-between items-center space-x-2">
+                    <div class="flex-1 bg-gray-200/70 h-2 rounded-full overflow-hidden">
+                        <div class="bg-blue-500 h-full" style="width: 85%"></div>
+                    </div>
+                    <div class="text-xs text-gray-600">电力系统</div>
+                    <div class="text-xs font-medium">85%</div>
+                </div>
+                <div class="flex justify-between items-center space-x-2 mt-2">
+                    <div class="flex-1 bg-gray-200/70 h-2 rounded-full overflow-hidden">
+                        <div class="bg-green-500 h-full" style="width: 72%"></div>
+                    </div>
+                    <div class="text-xs text-gray-600">配电技术</div>
+                    <div class="text-xs font-medium">72%</div>
+                </div>
+                <div class="flex justify-between items-center space-x-2 mt-2">
+                    <div class="flex-1 bg-gray-200/70 h-2 rounded-full overflow-hidden">
+                        <div class="bg-yellow-500 h-full" style="width: 90%"></div>
+                    </div>
+                    <div class="text-xs text-gray-600">安全管理</div>
+                    <div class="text-xs font-medium">90%</div>
+                </div>
+                <div class="flex justify-between items-center space-x-2 mt-2">
+                    <div class="flex-1 bg-gray-200/70 h-2 rounded-full overflow-hidden">
+                        <div class="bg-purple-500 h-full" style="width: 65%"></div>
+                    </div>
+                    <div class="text-xs text-gray-600">继电保护</div>
+                    <div class="text-xs font-medium">65%</div>
+                </div>
+                <div class="flex justify-between items-center space-x-2 mt-2">
+                    <div class="flex-1 bg-gray-200/70 h-2 rounded-full overflow-hidden">
+                        <div class="bg-red-500 h-full" style="width: 38%"></div>
+                    </div>
+                    <div class="text-xs text-gray-600">电力自动化</div>
+                    <div class="text-xs font-medium">38%</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 功能列表 - 半透明卡片 -->
+        <div class="glass-card mx-4 rounded-lg mb-4">
+            <div class="divide-y divide-gray-100/70">
+                <a href="./FavoritesPage.html" class="flex items-center justify-between p-4 interactive-card">
+                    <div class="flex items-center">
+                        <div class="icon-star-filled mp-icon w-6 h-6 text-yellow-500 mr-4"></div>
+                        <div class="text-gray-800">我的收藏</div>
+                    </div>
+                    <div class="icon-chevron-right mp-icon w-5 h-5 text-gray-400"></div>
+                </a>
+                
+                <a href="./WrongQuestionsPage.html" class="flex items-center justify-between p-4 interactive-card">
+                    <div class="flex items-center">
+                        <div class="icon-bookmark mp-icon w-6 h-6 text-red-500 mr-4"></div>
+                        <div class="text-gray-800">错题本</div>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="text-sm text-gray-500 mr-2">32题</div>
+                        <div class="icon-chevron-right mp-icon w-5 h-5 text-gray-400"></div>
+                    </div>
+                </a>
+                
+                <a href="./ActivationPage.html" class="flex items-center justify-between p-4 interactive-card">
+                    <div class="flex items-center">
+                        <div class="icon-key mp-icon w-6 h-6 text-green-500 mr-4"></div>
+                        <div class="text-gray-800">题库激活</div>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="text-xs px-1.5 py-0.5 bg-red-100/70 text-red-600 rounded mr-2">新功能</div>
+                        <div class="icon-chevron-right mp-icon w-5 h-5 text-gray-400"></div>
+                    </div>
+                </a>
+                
+                <div class="flex items-center justify-between p-4 interactive-card">
+                    <div class="flex items-center">
+                        <div class="icon-bell mp-icon w-6 h-6 text-blue-500 mr-4"></div>
+                        <div class="text-gray-800">消息中心</div>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="text-sm bg-red-500 text-white rounded-full px-1.5 mr-2">3</div>
+                        <div class="icon-chevron-right mp-icon w-5 h-5 text-gray-400"></div>
+                    </div>
+                </div>
+                
+                <div class="flex items-center justify-between p-4 interactive-card">
+                    <div class="flex items-center">
+                        <div class="icon-cog mp-icon w-6 h-6 text-gray-500 mr-4"></div>
+                        <div class="text-gray-800">设置</div>
+                    </div>
+                    <div class="icon-chevron-right mp-icon w-5 h-5 text-gray-400"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 版本信息 -->
+        <div class="mt-4 mb-20 text-center text-xs text-gray-400">
+            国网考试题库微信小程序 v1.2.1
+        </div>
+    </div>
+    
+    <!-- 底部导航栏 - 纯CSS实现 -->
+    <div class="bottom-nav">
+        <!-- 首页 -->
+        <a href="./HomePage.html" class="bottom-nav-item">
+            <div class="w-6 h-6 flex items-center justify-center">
+                <div class="icon-home mp-icon w-6 h-6 text-gray-500"></div>
+            </div>
+            <div class="text-xs mt-1 text-gray-500">首页</div>
+        </a>
+        
+        <!-- 题库 -->
+        <a href="./QuestionBankPage.html" class="bottom-nav-item">
+            <div class="w-6 h-6 flex items-center justify-center">
+                <div class="icon-book mp-icon w-6 h-6 text-gray-500"></div>
+            </div>
+            <div class="text-xs mt-1 text-gray-500">题库</div>
+        </a>
+        
+        <!-- 错题本 -->
+        <a href="./WrongQuestionsPage.html" class="bottom-nav-item">
+            <div class="w-6 h-6 flex items-center justify-center">
+                <div class="icon-bookmark mp-icon w-6 h-6 text-gray-500"></div>
+            </div>
+            <div class="text-xs mt-1 text-gray-500">错题</div>
+        </a>
+        
+        <!-- 我的 -->
+        <a href="./PersonalCenterPage.html" class="bottom-nav-item bottom-nav-active">
+            <div class="w-6 h-6 flex items-center justify-center">
+                <div class="icon-user mp-icon w-6 h-6 text-blue-600"></div>
+            </div>
+            <div class="text-xs mt-1 text-blue-600">我的</div>
+        </a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 知识点详情显示/隐藏逻辑
+            const viewDetailBtn = document.getElementById('viewDetailBtn');
+            const closeDetailBtn = document.getElementById('closeDetailBtn');
+            const knowledgeDetailPanel = document.getElementById('knowledgeDetailPanel');
+            
+            if (viewDetailBtn && closeDetailBtn && knowledgeDetailPanel) {
+                // 点击"查看详情"按钮显示详情面板
+                viewDetailBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    knowledgeDetailPanel.classList.remove('hidden');
+                    // 添加展开动画效果
+                    knowledgeDetailPanel.classList.add('animate-expand');
+                    // 滚动到详情面板
+                    knowledgeDetailPanel.scrollIntoView({ behavior: 'smooth' });
+                });
+                
+                // 点击"关闭"按钮隐藏详情面板
+                closeDetailBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    knowledgeDetailPanel.classList.add('hidden');
+                });
+            }
+            
+            // 波纹点击效果
+            const interactiveElements = document.querySelectorAll('.interactive-card');
+            interactiveElements.forEach(element => {
+                element.addEventListener('click', function(e) {
+                    const ripple = document.createElement('span');
+                    ripple.classList.add('ripple');
+                    this.appendChild(ripple);
+                    
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    ripple.style.width = ripple.style.height = `${size}px`;
+                    ripple.style.left = `${x}px`;
+                    ripple.style.top = `${y}px`;
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
+            
+            // 进度圆圈百分比数字动画
+            const percentText = document.querySelector('.percent-text');
+            if (percentText) {
+                animatePercentText(percentText, 78);
+            }
+            
+            function animatePercentText(element, targetPercent) {
+                let startPercent = 0;
+                const duration = 1500;
+                const frameDuration = 1000 / 60;
+                const totalFrames = Math.round(duration / frameDuration);
+                let frame = 0;
+                
+                const counter = setInterval(() => {
+                    frame++;
+                    const progress = frame / totalFrames;
+                    const currentPercent = Math.round(startPercent + (targetPercent - startPercent) * progress);
+                    
+                    if (progress >= 1) {
+                        clearInterval(counter);
+                        element.textContent = `${targetPercent}%`;
+                    } else {
+                        element.textContent = `${currentPercent}%`;
+                    }
+                }, frameDuration);
+            }
+            
+            // 数字增长动画
+            function animateNumbers(element, targetNumber) {
+                if (!element) return;
+                
+                const duration = 1500;
+                const frameDuration = 1000 / 60;
+                const totalFrames = Math.round(duration / frameDuration);
+                let frame = 0;
+                
+                const startNumber = 0;
+                
+                const counter = setInterval(() => {
+                    frame++;
+                    const progress = frame / totalFrames;
+                    const currentCount = Math.round(startNumber + (targetNumber - startNumber) * progress);
+                    
+                    if (progress >= 1) {
+                        clearInterval(counter);
+                        element.textContent = targetNumber;
+                    } else {
+                        element.textContent = currentCount;
+                    }
+                }, frameDuration);
+            }
+            
+            // 数字动画初始化
+            const studyDays = document.getElementById('studyDays');
+            const completedQuestions = document.getElementById('completedQuestions');
+            const knowledgePoints = document.getElementById('knowledgePoints');
+            
+            if (studyDays && completedQuestions && knowledgePoints) {
+                const studyDaysTarget = parseInt(studyDays.textContent);
+                const completedQuestionsTarget = parseInt(completedQuestions.textContent);
+                const knowledgePointsTarget = parseInt(knowledgePoints.textContent);
+                
+                studyDays.textContent = '0';
+                completedQuestions.textContent = '0';
+                knowledgePoints.textContent = '0';
+                
+                // 错开启动时间，创造连续动画效果
+                setTimeout(() => animateNumbers(studyDays, studyDaysTarget), 300);
+                setTimeout(() => animateNumbers(completedQuestions, completedQuestionsTarget), 500);
+                setTimeout(() => animateNumbers(knowledgePoints, knowledgePointsTarget), 700);
+            }
+            
+            // 添加卡片进入动画
+            const cards = document.querySelectorAll('.glass-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 100 + (index * 150));
+            });
+        });
+    </script>
+</body>
+</html> 

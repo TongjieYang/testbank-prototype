@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>国网考试题库微信小程序 - 题库分类</title>
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入动效样式 -->
+    <link rel="stylesheet" href="./animation.css">
+    <link rel="stylesheet" href="./nav.css">
+    <link rel="stylesheet" href="./debug.css">
+    <style>
+        /* 微信小程序风格的自定义样式 */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background-color: #f5f5f5;
+        }
+        .mp-icon {
+            display: inline-block;
+            width: 1.5rem;
+            height: 1.5rem;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+        .icon-home { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" /></svg>'); }
+        .icon-book { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" /></svg>'); }
+        .icon-bookmark { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" /></svg>'); }
+        .icon-user { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg>'); }
+        .icon-back { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" /></svg>'); }
+        .icon-chevron-right { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg>'); }
+        .icon-search { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" /></svg>'); }
+        .icon-star { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" /></svg>'); }
+        .icon-star-filled { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clip-rule="evenodd" /></svg>'); }
+        .icon-check { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>'); }
+        .icon-filter { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z" /></svg>'); }
+        
+        /* 分类滑动效果 */
+        .category-tabs {
+            overflow-x: auto;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE and Edge */
+        }
+        
+        .category-tabs::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera*/
+        }
+        
+        /* 标签选中动效 */
+        .category-tab {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .category-tab::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background-color: #2563eb;
+            transform: translateX(-50%);
+            transition: width 0.3s ease;
+        }
+        
+        .category-tab.active::after {
+            width: 30px;
+        }
+        
+        .category-tab:active {
+            transform: scale(0.95);
+        }
+        
+        /* 分类内容切换动画 */
+        .category-content {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+        
+        .category-content.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* 层级导航动画 */
+        .breadcrumb-item {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .breadcrumb-item:hover {
+            color: #2563eb;
+        }
+        
+        .breadcrumb-item::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: #2563eb;
+            transition: width 0.3s ease;
+        }
+        
+        .breadcrumb-item:hover::after {
+            width: 100%;
+        }
+        
+        /* 卡片悬浮效果 */
+        .category-card {
+            transition: all 0.3s ease;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div class="fixed-app-container">
+        <div class="max-w-md mx-auto bg-white min-h-screen page-container">
+            <!-- 顶部导航栏 -->
+            <div class="flex items-center px-4 py-3 bg-blue-600 text-white">
+                <a href="javascript:history.back()" class="icon-back mp-icon w-6 h-6 text-white"></a>
+                <div class="font-bold text-lg mx-auto">题库分类</div>
+                <div class="icon-search mp-icon w-6 h-6 text-white" id="searchBtn"></div>
+            </div>
+            
+            <!-- 搜索框 (默认隐藏) -->
+            <div class="hidden px-4 py-2 bg-white" id="searchBar">
+                <div class="flex items-center bg-gray-100 rounded-full px-4 py-2">
+                    <div class="icon-search mp-icon w-5 h-5 text-gray-400"></div>
+                    <input type="text" placeholder="搜索题目、知识点、章节" class="bg-transparent border-none flex-1 ml-2 text-sm focus:outline-none" />
+                </div>
+            </div>
+            
+            <!-- 分类导航面包屑 -->
+            <div class="px-4 py-2 bg-white border-b border-gray-200">
+                <div class="flex items-center text-sm overflow-x-auto whitespace-nowrap py-1 scrollbar-hide">
+                    <div class="text-blue-600 breadcrumb-item" data-level="0">全部类别</div>
+                    <span id="breadcrumb-path" class="hidden">
+                        <span class="mx-2 text-gray-400">></span>
+                        <div class="text-blue-600 breadcrumb-item" data-level="1">配电技术</div>
+                        <span class="mx-2 text-gray-400">></span>
+                        <div class="text-blue-600 breadcrumb-item" data-level="2">配电设备</div>
+                        <span class="mx-2 text-gray-400">></span>
+                        <div class="text-gray-700 breadcrumb-item" data-level="3">变压器</div>
+                    </span>
+                </div>
+            </div>
+            
+            <!-- 类别导航 (第一级) -->
+            <div id="level-1" class="category-content active">
+                <div class="px-4 py-3 bg-white border-b border-gray-200">
+                    <div class="font-medium">选择类别</div>
+                </div>
+                
+                <div class="p-4 grid grid-cols-2 gap-3">
+                    <!-- 类别1 -->
+                    <div class="category-card bg-white rounded-lg shadow-sm p-4 flex flex-col items-center list-item-slide" data-category="power-system">
+                        <div class="w-14 h-14 rounded-full bg-blue-100 flex items-center justify-center mb-2">
+                            <div class="icon-book mp-icon w-7 h-7 text-blue-600"></div>
+                        </div>
+                        <div class="font-medium text-center">电力系统基础</div>
+                        <div class="text-xs text-gray-500 mt-1">2个科目 | 780题</div>
+                        <div class="mt-2 text-xs">
+                            <div class="w-full bg-gray-200 h-1.5 rounded-full">
+                                <div class="bg-blue-600 h-full rounded-full progress-animate" style="width: 45%"></div>
+                            </div>
+                            <div class="mt-1 text-gray-500">已掌握 45%</div>
+                        </div>
+                    </div>
+                    
+                    <!-- 类别2 -->
+                    <div class="category-card bg-white rounded-lg shadow-sm p-4 flex flex-col items-center list-item-slide" data-category="distribution">
+                        <div class="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center mb-2">
+                            <div class="icon-book mp-icon w-7 h-7 text-green-600"></div>
+                        </div>
+                        <div class="font-medium text-center">配电技术</div>
+                        <div class="text-xs text-gray-500 mt-1">4个科目 | 1263题</div>
+                        <div class="mt-2 text-xs">
+                            <div class="w-full bg-gray-200 h-1.5 rounded-full">
+                                <div class="bg-green-600 h-full rounded-full progress-animate" style="width: 72%"></div>
+                            </div>
+                            <div class="mt-1 text-gray-500">已掌握 72%</div>
+                        </div>
+                    </div>
+                    
+                    <!-- 类别3 -->
+                    <div class="category-card bg-white rounded-lg shadow-sm p-4 flex flex-col items-center list-item-slide" data-category="safety">
+                        <div class="w-14 h-14 rounded-full bg-red-100 flex items-center justify-center mb-2">
+                            <div class="icon-book mp-icon w-7 h-7 text-red-600"></div>
+                        </div>
+                        <div class="font-medium text-center">安全管理</div>
+                        <div class="text-xs text-gray-500 mt-1">3个科目 | 856题</div>
+                        <div class="mt-2 text-xs">
+                            <div class="w-full bg-gray-200 h-1.5 rounded-full">
+                                <div class="bg-red-600 h-full rounded-full progress-animate" style="width: 60%"></div>
+                            </div>
+                            <div class="mt-1 text-gray-500">已掌握 60%</div>
+                        </div>
+                    </div>
+                    
+                    <!-- 类别4 -->
+                    <div class="category-card bg-white rounded-lg shadow-sm p-4 flex flex-col items-center list-item-slide" data-category="automation">
+                        <div class="w-14 h-14 rounded-full bg-purple-100 flex items-center justify-center mb-2">
+                            <div class="icon-book mp-icon w-7 h-7 text-purple-600"></div>
+                        </div>
+                        <div class="font-medium text-center">电力自动化</div>
+                        <div class="text-xs text-gray-500 mt-1">2个科目 | 635题</div>
+                        <div class="mt-2 text-xs">
+                            <div class="w-full bg-gray-200 h-1.5 rounded-full">
+                                <div class="bg-purple-600 h-full rounded-full progress-animate" style="width: 38%"></div>
+                            </div>
+                            <div class="mt-1 text-gray-500">已掌握 38%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 科目导航 (第二级) -->
+            <div id="level-2" class="category-content hidden">
+                <div class="px-4 py-3 bg-white border-b border-gray-200">
+                    <div class="font-medium">配电技术 - 科目</div>
+                </div>
+                
+                <div class="category-tabs flex border-b border-gray-200 overflow-x-auto py-2 px-4 bg-white">
+                    <div class="category-tab active whitespace-nowrap px-4 py-2 text-sm font-medium text-blue-600">配电网络</div>
+                    <div class="category-tab whitespace-nowrap px-4 py-2 text-sm font-medium text-gray-600">配电设备</div>
+                    <div class="category-tab whitespace-nowrap px-4 py-2 text-sm font-medium text-gray-600">配电自动化</div>
+                    <div class="category-tab whitespace-nowrap px-4 py-2 text-sm font-medium text-gray-600">配电运维</div>
+                </div>
+                
+                <div class="p-4 space-y-3">
+                    <!-- 科目1下的章节列表 -->
+                    <div class="list-item-slide">
+                        <div class="bg-white rounded-lg shadow-sm p-4">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <div class="font-medium">配电网结构</div>
+                                    <div class="text-xs text-gray-500 mt-1">3个知识点 | 124题</div>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="text-xs text-green-600 mr-2">掌握度 85%</div>
+                                    <div class="icon-chevron-right mp-icon w-5 h-5 text-gray-400"></div>
+                                </div>
+                            </div>
+                            <div class="mt-2 w-full bg-gray-200 h-1.5 rounded-full">
+                                <div class="bg-green-600 h-full rounded-full progress-animate" style="width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="list-item-slide">
+                        <div class="bg-white rounded-lg shadow-sm p-4">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <div class="font-medium">配电自动化</div>
+                                    <div class="text-xs text-gray-500 mt-1">3个知识点 | 98题</div>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="text-xs text-yellow-600 mr-2">掌握度 62%</div>
+                                    <div class="icon-chevron-right mp-icon w-5 h-5 text-gray-400"></div>
+                                </div>
+                            </div>
+                            <div class="mt-2 w-full bg-gray-200 h-1.5 rounded-full">
+                                <div class="bg-yellow-600 h-full rounded-full progress-animate" style="width: 62%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 章节导航 (第三级) -->
+            <div id="level-3" class="category-content hidden">
+                <div class="px-4 py-3 bg-white border-b border-gray-200">
+                    <div class="font-medium">配电设备 - 章节</div>
+                </div>
+                
+                <div class="category-tabs flex border-b border-gray-200 overflow-x-auto py-2 px-4 bg-white">
+                    <div class="category-tab active whitespace-nowrap px-4 py-2 text-sm font-medium text-blue-600">变压器</div>
+                    <div class="category-tab whitespace-nowrap px-4 py-2 text-sm font-medium text-gray-600">断路器</div>
+                    <div class="category-tab whitespace-nowrap px-4 py-2 text-sm font-medium text-gray-600">隔离开关</div>
+                    <div class="category-tab whitespace-nowrap px-4 py-2 text-sm font-medium text-gray-600">避雷器</div>
+                    <div class="category-tab whitespace-nowrap px-4 py-2 text-sm font-medium text-gray-600">电容器</div>
+                </div>
+                
+                <div class="p-4">
+                    <div class="flex justify-between items-center mb-4">
+                        <div class="text-sm font-medium">知识点 (5)</div>
+                        <div class="flex items-center">
+                            <div class="text-xs text-gray-500 mr-2">排序:</div>
+                            <div class="text-xs text-blue-600">学习进度</div>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <!-- 知识点列表 -->
+                        <div class="bg-white rounded-lg shadow-sm p-4 list-item-slide" onclick="location.href='./ExercisePage.html'">
+                            <div class="flex justify-between">
+                                <div class="font-medium">变压器原理</div>
+                                <div class="text-xs text-green-600">已掌握</div>
+                            </div>
+                            <div class="text-xs text-gray-500 mt-1">32题 | 上次学习: 3天前</div>
+                            <div class="mt-2 flex justify-between items-center">
+                                <div class="text-xs text-gray-600">掌握度</div>
+                                <div class="text-xs text-green-600">95%</div>
+                            </div>
+                            <div class="mt-1 w-full bg-gray-200 h-1.5 rounded-full">
+                                <div class="bg-green-600 h-full rounded-full progress-animate" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-lg shadow-sm p-4 list-item-slide" onclick="location.href='./ExercisePage.html'">
+                            <div class="flex justify-between">
+                                <div class="font-medium">变压器类型</div>
+                                <div class="text-xs text-green-600">已掌握</div>
+                            </div>
+                            <div class="text-xs text-gray-500 mt-1">28题 | 上次学习: 5天前</div>
+                            <div class="mt-2 flex justify-between items-center">
+                                <div class="text-xs text-gray-600">掌握度</div>
+                                <div class="text-xs text-green-600">90%</div>
+                            </div>
+                            <div class="mt-1 w-full bg-gray-200 h-1.5 rounded-full">
+                                <div class="bg-green-600 h-full rounded-full progress-animate" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-lg shadow-sm p-4 list-item-slide" onclick="location.href='./ExercisePage.html'">
+                            <div class="flex justify-between">
+                                <div class="font-medium">变压器参数</div>
+                                <div class="text-xs text-yellow-600">学习中</div>
+                            </div>
+                            <div class="text-xs text-gray-500 mt-1">24题 | 上次学习: 昨天</div>
+                            <div class="mt-2 flex justify-between items-center">
+                                <div class="text-xs text-gray-600">掌握度</div>
+                                <div class="text-xs text-yellow-600">75%</div>
+                            </div>
+                            <div class="mt-1 w-full bg-gray-200 h-1.5 rounded-full">
+                                <div class="bg-yellow-600 h-full rounded-full progress-animate" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-lg shadow-sm p-4 list-item-slide" onclick="location.href='./ExercisePage.html'">
+                            <div class="flex justify-between">
+                                <div class="font-medium">故障检测</div>
+                                <div class="text-xs text-yellow-600">学习中</div>
+                            </div>
+                            <div class="text-xs text-gray-500 mt-1">30题 | 上次学习: 今天</div>
+                            <div class="mt-2 flex justify-between items-center">
+                                <div class="text-xs text-gray-600">掌握度</div>
+                                <div class="text-xs text-yellow-600">65%</div>
+                            </div>
+                            <div class="mt-1 w-full bg-gray-200 h-1.5 rounded-full">
+                                <div class="bg-yellow-600 h-full rounded-full progress-animate" style="width: 65%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-lg shadow-sm p-4 list-item-slide" onclick="location.href='./ExercisePage.html'">
+                            <div class="flex justify-between">
+                                <div class="font-medium">保护装置</div>
+                                <div class="text-xs text-red-600">待学习</div>
+                            </div>
+                            <div class="text-xs text-gray-500 mt-1">26题 | 未学习</div>
+                            <div class="mt-2 flex justify-between items-center">
+                                <div class="text-xs text-gray-600">掌握度</div>
+                                <div class="text-xs text-red-600">0%</div>
+                            </div>
+                            <div class="mt-1 w-full bg-gray-200 h-1.5 rounded-full">
+                                <div class="bg-red-600 h-full rounded-full progress-animate" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 练习按钮 -->
+                    <div class="mt-6 flex space-x-3">
+                        <button class="flex-1 bg-blue-600 text-white py-3 rounded-lg font-medium btn-pulse" onclick="location.href='./ExercisePage.html'">
+                            章节练习
+                        </button>
+                        <button class="flex-1 bg-white border border-blue-600 text-blue-600 py-3 rounded-lg font-medium btn-pulse">
+                            知识检测
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 底部导航栏 - 移出page-container -->
+        <div class="bottom-nav">
+            <!-- 首页 -->
+            <a href="./HomePage.html" class="bottom-nav-item">
+                <div class="w-6 h-6 flex items-center justify-center">
+                    <div class="icon-home mp-icon w-6 h-6 text-gray-500"></div>
+                </div>
+                <div class="text-xs mt-1 text-gray-500">首页</div>
+            </a>
+            
+            <!-- 题库 -->
+            <a href="./QuestionBankPage.html" class="bottom-nav-item bottom-nav-active">
+                <div class="w-6 h-6 flex items-center justify-center">
+                    <div class="icon-book mp-icon w-6 h-6 text-blue-600"></div>
+                </div>
+                <div class="text-xs mt-1 text-blue-600">题库</div>
+            </a>
+            
+            <!-- 错题本 -->
+            <a href="./WrongQuestionsPage.html" class="bottom-nav-item">
+                <div class="w-6 h-6 flex items-center justify-center">
+                    <div class="icon-bookmark mp-icon w-6 h-6 text-gray-500"></div>
+                </div>
+                <div class="text-xs mt-1 text-gray-500">错题</div>
+            </a>
+            
+            <!-- 我的 -->
+            <a href="./PersonalCenterPage.html" class="bottom-nav-item">
+                <div class="w-6 h-6 flex items-center justify-center">
+                    <div class="icon-user mp-icon w-6 h-6 text-gray-500"></div>
+                </div>
+                <div class="text-xs mt-1 text-gray-500">我的</div>
+            </a>
+        </div>
+    </div>
+    
+    <!-- 引入动效脚本 -->
+    <script src="./transition.js"></script>
+    
+    <!-- 引入题库加载器 -->
+    <script src="./js/questionLoader.js"></script>
+    <script src="./js/categoryLoader.js"></script>
+    
+    <!-- 引入导航脚本 -->
+    <script src="./nav.js"></script>
+    
+    <!-- 修复样式和脚本 -->
+    <link rel="stylesheet" href="./fixnav.css">
+    <script src="./fixnav.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 搜索框展开/收起
+            const searchBtn = document.getElementById('searchBtn');
+            const searchBar = document.getElementById('searchBar');
+            
+            searchBtn.addEventListener('click', function() {
+                searchBar.classList.toggle('hidden');
+                if (!searchBar.classList.contains('hidden')) {
+                    searchBar.querySelector('input').focus();
+                }
+            });
+            
+            // 类别点击事件 - 从一级到二级
+            const categoryCards = document.querySelectorAll('.category-card');
+            categoryCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    // 显示面包屑
+                    const breadcrumbPath = document.getElementById('breadcrumb-path');
+                    breadcrumbPath.classList.remove('hidden');
+                    
+                    // 切换到二级页面
+                    document.getElementById('level-1').classList.remove('active');
+                    document.getElementById('level-1').classList.add('hidden');
+                    document.getElementById('level-2').classList.remove('hidden');
+                    
+                    // 添加进入动画
+                    setTimeout(() => {
+                        document.getElementById('level-2').classList.add('active');
+                    }, 50);
+                    
+                    // 更新面包屑路径
+                    const categoryName = this.querySelector('.font-medium').textContent;
+                    document.querySelector('[data-level="1"]').textContent = categoryName;
+                    
+                    // 显示动画
+                    showToast(`已选择: ${categoryName}`);
+                });
+            });
+            
+            // 面包屑导航点击
+            const breadcrumbItems = document.querySelectorAll('.breadcrumb-item');
+            breadcrumbItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const level = parseInt(this.dataset.level);
+                    
+                    // 隐藏所有层级内容
+                    document.querySelectorAll('.category-content').forEach(content => {
+                        content.classList.remove('active');
+                        content.classList.add('hidden');
+                    });
+                    
+                    // 显示当前层级内容
+                    const targetLevel = document.getElementById(`level-${level + 1}`);
+                    if (targetLevel) {
+                        targetLevel.classList.remove('hidden');
+                        setTimeout(() => {
+                            targetLevel.classList.add('active');
+                        }, 50);
+                    }
+                    
+                    // 更新面包屑显示
+                    if (level === 0) {
+                        document.getElementById('breadcrumb-path').classList.add('hidden');
+                    }
+                    
+                    // 显示动画
+                    showToast(`返回到: ${this.textContent}`);
+                });
+            });
+            
+            // 科目标签点击事件
+            const categoryTabs = document.querySelectorAll('.category-tab');
+            categoryTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // 移除其他标签的激活状态
+                    categoryTabs.forEach(t => t.classList.remove('active', 'text-blue-600'));
+                    categoryTabs.forEach(t => t.classList.add('text-gray-600'));
+                    
+                    // 设置当前标签为激活状态
+                    this.classList.add('active', 'text-blue-600');
+                    this.classList.remove('text-gray-600');
+                    
+                    // 如果点击的是第二级的标签，并且不是已经选中的变压器，则切换到第三级
+                    if (this.textContent === '配电设备' && !document.getElementById('level-3').classList.contains('active')) {
+                        // 切换到三级页面
+                        document.getElementById('level-2').classList.remove('active');
+                        document.getElementById('level-2').classList.add('hidden');
+                        document.getElementById('level-3').classList.remove('hidden');
+                        
+                        // 添加进入动画
+                        setTimeout(() => {
+                            document.getElementById('level-3').classList.add('active');
+                        }, 50);
+                        
+                        // 更新面包屑路径
+                        document.querySelector('[data-level="2"]').textContent = this.textContent;
+                        
+                        // 显示动画
+                        showToast(`已选择: ${this.textContent}`);
+                    }
+                });
+            });
+            
+            // 进度条动画
+            const progressBars = document.querySelectorAll('.progress-animate');
+            progressBars.forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 300);
+            });
+            
+            // Toast提示
+            function showToast(message) {
+                const toast = document.createElement('div');
+                toast.className = 'fixed top-16 left-1/2 transform -translate-x-1/2 px-4 py-2 rounded-full text-white text-sm bg-gray-800 z-50 opacity-0';
+                toast.textContent = message;
+                document.body.appendChild(toast);
+                
+                // 添加动画
+                toast.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                toast.style.transform = 'translate(-50%, -20px)';
+                
+                setTimeout(() => {
+                    toast.style.opacity = '1';
+                    toast.style.transform = 'translate(-50%, 0)';
+                }, 10);
+                
+                // 自动消失
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translate(-50%, -20px)';
+                    setTimeout(() => {
+                        document.body.removeChild(toast);
+                    }, 300);
+                }, 2000);
+            }
+            
+            // 知识点列表项动画
+            const listItems = document.querySelectorAll('.list-item-slide');
+            listItems.forEach((item, index) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateX(20px)';
+                setTimeout(() => {
+                    item.style.transition = 'all 0.3s ease';
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateX(0)';
+                }, 100 + (index * 50));
+            });
+        });
+    </script>
+</body>
+</html> 

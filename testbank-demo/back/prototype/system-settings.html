@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>国网考试题库后台管理系统 - 系统设置</title>
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+    <div class="layout">
+        <!-- 侧边栏 -->
+        <div class="sidebar">
+            <div class="system-logo">
+                <img src="https://via.placeholder.com/32x32?text=Logo" alt="Logo">
+                <span class="system-logo-text">国网考试题库</span>
+            </div>
+            <ul class="menu">
+                <li class="menu-item">
+                    <a href="dashboard.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-speedometer2"></i></span>
+                        <span class="menu-text">仪表盘</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="category-management.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-folder2"></i></span>
+                        <span class="menu-text">分类管理</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="question-management.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-file-earmark-text"></i></span>
+                        <span class="menu-text">题目管理</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="tag-management.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-tags"></i></span>
+                        <span class="menu-text">标签管理</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="activation-code.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-key"></i></span>
+                        <span class="menu-text">激活码管理</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="user-management.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-people"></i></span>
+                        <span class="menu-text">用户管理</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="data-analysis.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-bar-chart"></i></span>
+                        <span class="menu-text">数据分析</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="system-settings.html" class="menu-link active">
+                        <span class="menu-icon"><i class="bi bi-gear"></i></span>
+                        <span class="menu-text">系统设置</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 主内容区 -->
+        <div class="main-content">
+            <!-- 顶部导航栏 -->
+            <div class="navbar">
+                <div class="nav-left">
+                    <button class="btn btn-secondary" id="toggle-sidebar">
+                        <i class="bi bi-list"></i>
+                    </button>
+                    <div class="breadcrumb">
+                        <div class="breadcrumb-item"><a href="dashboard.html">首页</a></div>
+                        <div class="breadcrumb-item active">系统设置</div>
+                    </div>
+                </div>
+                <div class="nav-right">
+                    <div class="user-dropdown">
+                        <span><i class="bi bi-person-circle"></i> 管理员 <i class="bi bi-chevron-down"></i></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 内容区域 -->
+            <div class="content">
+                <div class="page-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                    <h1>系统设置</h1>
+                </div>
+                
+                <!-- 设置类型选项卡 -->
+                <div style="margin-bottom: 24px;">
+                    <div class="tabs">
+                        <div class="tab active" data-tab="basic">基本设置</div>
+                        <div class="tab" data-tab="security">安全设置</div>
+                        <div class="tab" data-tab="notification">通知设置</div>
+                        <div class="tab" data-tab="backup">备份与恢复</div>
+                        <div class="tab" data-tab="log">系统日志</div>
+                    </div>
+                </div>
+                
+                <!-- 基本设置 -->
+                <div class="tab-content" id="basic-settings">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">基础信息设置</div>
+                        </div>
+                        <div style="padding: 20px 0;">
+                            <form id="basic-form">
+                                <div class="form-item">
+                                    <label for="system-name">系统名称</label>
+                                    <input type="text" id="system-name" value="国网考试题库后台管理系统" placeholder="请输入系统名称">
+                                </div>
+                                
+                                <div class="form-item">
+                                    <label for="system-logo">系统Logo</label>
+                                    <div style="display: flex; align-items: center; gap: 16px;">
+                                        <img src="https://via.placeholder.com/100x100?text=Logo" alt="系统Logo" style="width: 100px; height: 100px;">
+                                        <div>
+                                            <button class="btn btn-secondary" style="margin-bottom: 8px; width: 120px;">
+                                                <i class="bi bi-upload"></i> 上传Logo
+                                            </button>
+                                            <div style="font-size: 12px; color: #888;">
+                                                建议尺寸: 200x200px<br>
+                                                支持格式: PNG, JPG, SVG
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-item">
+                                    <label for="system-description">系统描述</label>
+                                    <textarea id="system-description" rows="3" placeholder="请输入系统描述">国网考试题库是面向国家电网员工的专业考试系统，提供全面的电力相关知识练习和考核。</textarea>
+                                </div>
+                                
+                                <div class="form-item">
+                                    <label for="contact-email">联系邮箱</label>
+                                    <input type="email" id="contact-email" value="admin@example.com" placeholder="请输入联系邮箱">
+                                </div>
+                                
+                                <div class="form-item">
+                                    <label for="copyright">版权信息</label>
+                                    <input type="text" id="copyright" value="© 2024 国家电网有限公司" placeholder="请输入版权信息">
+                                </div>
+                                
+                                <hr style="margin: 24px 0;">
+                                
+                                <div class="form-item">
+                                    <label>题库设置</label>
+                                    <div style="margin-bottom: 12px;">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" checked>
+                                            <span>允许用户收藏题目</span>
+                                        </label>
+                                    </div>
+                                    <div style="margin-bottom: 12px;">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" checked>
+                                            <span>展示答题正确率</span>
+                                        </label>
+                                    </div>
+                                    <div style="margin-bottom: 12px;">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" checked>
+                                            <span>自动生成错题集</span>
+                                        </label>
+                                    </div>
+                                    <div style="margin-bottom: 12px;">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" checked>
+                                            <span>开启学习数据统计</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-item">
+                                    <label for="default-page-size">默认分页大小</label>
+                                    <select id="default-page-size">
+                                        <option value="10">10条/页</option>
+                                        <option value="20" selected>20条/页</option>
+                                        <option value="50">50条/页</option>
+                                        <option value="100">100条/页</option>
+                                    </select>
+                                </div>
+                                
+                                <div style="margin-top: 24px; text-align: right;">
+                                    <button class="btn btn-secondary" style="margin-right: 12px;">重置</button>
+                                    <button class="btn btn-primary">保存设置</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 安全设置 -->
+                <div class="tab-content" id="security-settings" style="display: none;">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">安全策略设置</div>
+                        </div>
+                        <div style="padding: 20px 0;">
+                            <form id="security-form">
+                                <div class="form-item">
+                                    <label>密码策略</label>
+                                    <div style="margin-bottom: 12px;">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" checked>
+                                            <span>必须包含大小写字母</span>
+                                        </label>
+                                    </div>
+                                    <div style="margin-bottom: 12px;">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" checked>
+                                            <span>必须包含数字</span>
+                                        </label>
+                                    </div>
+                                    <div style="margin-bottom: 12px;">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" checked>
+                                            <span>必须包含特殊字符</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-item">
+                                    <label for="min-password-length">最小密码长度</label>
+                                    <select id="min-password-length">
+                                        <option value="6">6位</option>
+                                        <option value="8" selected>8位</option>
+                                        <option value="10">10位</option>
+                                        <option value="12">12位</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-item">
+                                    <label for="password-expire">密码过期时间</label>
+                                    <select id="password-expire">
+                                        <option value="30">30天</option>
+                                        <option value="60">60天</option>
+                                        <option value="90" selected>90天</option>
+                                        <option value="180">180天</option>
+                                        <option value="0">永不过期</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-item">
+                                    <label for="login-attempts">登录失败限制</label>
+                                    <select id="login-attempts">
+                                        <option value="3">3次</option>
+                                        <option value="5" selected>5次</option>
+                                        <option value="10">10次</option>
+                                        <option value="0">不限制</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-item">
+                                    <label for="lock-time">账号锁定时间</label>
+                                    <select id="lock-time">
+                                        <option value="15">15分钟</option>
+                                        <option value="30" selected>30分钟</option>
+                                        <option value="60">1小时</option>
+                                        <option value="1440">24小时</option>
+                                    </select>
+                                </div>
+                                
+                                <hr style="margin: 24px 0;">
+                                
+                                <div class="form-item">
+                                    <label>登录安全</label>
+                                    <div style="margin-bottom: 12px;">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" checked>
+                                            <span>开启管理员双因素认证</span>
+                                        </label>
+                                    </div>
+                                    <div style="margin-bottom: 12px;">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox">
+                                            <span>限制单一账号同时登录</span>
+                                        </label>
+                                    </div>
+                                    <div style="margin-bottom: 12px;">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" checked>
+                                            <span>记录登录IP和设备信息</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-item">
+                                    <label for="session-timeout">会话超时时间</label>
+                                    <select id="session-timeout">
+                                        <option value="15">15分钟</option>
+                                        <option value="30" selected>30分钟</option>
+                                        <option value="60">1小时</option>
+                                        <option value="120">2小时</option>
+                                    </select>
+                                </div>
+                                
+                                <div style="margin-top: 24px; text-align: right;">
+                                    <button class="btn btn-secondary" style="margin-right: 12px;">重置</button>
+                                    <button class="btn btn-primary">保存设置</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 通知设置 -->
+                <div class="tab-content" id="notification-settings" style="display: none;">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">通知与消息设置</div>
+                        </div>
+                        <div style="padding: 20px 0;">
+                            <form id="notification-form">
+                                <div class="form-item">
+                                    <label>系统通知设置</label>
+                                    <div style="margin-bottom: 12px;">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" checked>
+                                            <span>新用户注册通知</span>
+                                        </label>
+                                    </div>
+                                    <div style="margin-bottom: 12px;">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" checked>
+                                            <span>用户激活码使用通知</span>
+                                        </label>
+                                    </div>
+                                    <div style="margin-bottom: 12px;">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" checked>
+                                            <span>异常登录行为通知</span>
+                                        </label>
+                                    </div>
+                                    <div style="margin-bottom: 12px;">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" checked>
+                                            <span>系统异常通知</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-item">
+                                    <label>管理员通知接收方式</label>
+                                    <div style="margin-bottom: 12px;">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" checked>
+                                            <span>系统消息</span>
+                                        </label>
+                                    </div>
+                                    <div style="margin-bottom: 12px;">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" checked>
+                                            <span>电子邮件</span>
+                                        </label>
+                                    </div>
+                                    <div style="margin-bottom: 12px;">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox">
+                                            <span>短信通知</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-item">
+                                    <label>用户通知设置</label>
+                                    <div style="margin-bottom: 12px;">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" checked>
+                                            <span>新题库上线通知</span>
+                                        </label>
+                                    </div>
+                                    <div style="margin-bottom: 12px;">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" checked>
+                                            <span>会员到期提醒</span>
+                                        </label>
+                                    </div>
+                                    <div style="margin-bottom: 12px;">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" checked>
+                                            <span>学习提醒</span>
+                                        </label>
+                                    </div>
+                                    <div style="margin-bottom: 12px;">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox">
+                                            <span>系统维护通知</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-item">
+                                    <label for="email-sender">系统邮件发送者</label>
+                                    <input type="email" id="email-sender" value="noreply@example.com" placeholder="输入系统邮件发送地址">
+                                </div>
+                                
+                                <div class="form-item">
+                                    <label for="smtp-server">SMTP服务器</label>
+                                    <input type="text" id="smtp-server" value="smtp.example.com" placeholder="输入SMTP服务器地址">
+                                </div>
+                                
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                                    <div class="form-item">
+                                        <label for="smtp-port">SMTP端口</label>
+                                        <input type="number" id="smtp-port" value="587" placeholder="输入SMTP端口">
+                                    </div>
+                                    
+                                    <div class="form-item">
+                                        <label for="smtp-security">安全连接</label>
+                                        <select id="smtp-security">
+                                            <option value="none">无</option>
+                                            <option value="tls" selected>TLS</option>
+                                            <option value="ssl">SSL</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-item">
+                                    <label for="smtp-username">SMTP用户名</label>
+                                    <input type="text" id="smtp-username" value="mail@example.com" placeholder="输入SMTP用户名">
+                                </div>
+                                
+                                <div class="form-item">
+                                    <label for="smtp-password">SMTP密码</label>
+                                    <input type="password" id="smtp-password" value="********" placeholder="输入SMTP密码">
+                                </div>
+                                
+                                <div style="margin-top: 24px; text-align: right;">
+                                    <button class="btn btn-secondary" style="margin-right: 12px;">测试连接</button>
+                                    <button class="btn btn-primary">保存设置</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 备份与恢复 -->
+                <div class="tab-content" id="backup-settings" style="display: none;">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">数据备份设置</div>
+                        </div>
+                        <div style="padding: 20px 0;">
+                            <form id="backup-form">
+                                <div class="form-item">
+                                    <label>自动备份设置</label>
+                                    <div style="margin-bottom: 12px;">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" checked>
+                                            <span>启用自动备份</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-item">
+                                    <label for="backup-frequency">备份频率</label>
+                                    <select id="backup-frequency">
+                                        <option value="daily">每天</option>
+                                        <option value="weekly" selected>每周</option>
+                                        <option value="biweekly">每两周</option>
+                                        <option value="monthly">每月</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-item">
+                                    <label for="backup-time">备份时间</label>
+                                    <input type="time" id="backup-time" value="01:00">
+                                </div>
+                                
+                                <div class="form-item">
+                                    <label for="backup-keep">保留备份数量</label>
+                                    <select id="backup-keep">
+                                        <option value="3">保留最近3次</option>
+                                        <option value="5" selected>保留最近5次</option>
+                                        <option value="10">保留最近10次</option>
+                                        <option value="all">保留所有备份</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-item">
+                                    <label>备份内容</label>
+                                    <div style="margin-bottom: 12px;">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" checked>
+                                            <span>用户数据</span>
+                                        </label>
+                                    </div>
+                                    <div style="margin-bottom: 12px;">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" checked>
+                                            <span>题库内容</span>
+                                        </label>
+                                    </div>
+                                    <div style="margin-bottom: 12px;">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" checked>
+                                            <span>系统配置</span>
+                                        </label>
+                                    </div>
+                                    <div style="margin-bottom: 12px;">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox">
+                                            <span>系统日志</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-item">
+                                    <label for="backup-storage">备份存储位置</label>
+                                    <select id="backup-storage">
+                                        <option value="local" selected>本地存储</option>
+                                        <option value="cloud">云存储</option>
+                                        <option value="both">本地+云存储</option>
+                                    </select>
+                                </div>
+                                
+                                <hr style="margin: 24px 0;">
+                                
+                                <div class="form-item">
+                                    <label>手动备份与恢复</label>
+                                    <div style="margin-top: 16px;">
+                                        <button class="btn btn-primary" style="margin-right: 12px;">
+                                            <i class="bi bi-download"></i> 立即备份
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-item">
+                                    <label>现有备份</label>
+                                    <div style="margin-top: 12px;">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>备份名称</th>
+                                                    <th>创建时间</th>
+                                                    <th>大小</th>
+                                                    <th>类型</th>
+                                                    <th>操作</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>backup_20240405_010023</td>
+                                                    <td>2024-04-05 01:00:23</td>
+                                                    <td>256 MB</td>
+                                                    <td>自动备份</td>
+                                                    <td>
+                                                        <button class="btn-icon" title="恢复"><i class="bi bi-arrow-counterclockwise"></i></button>
+                                                        <button class="btn-icon" title="下载"><i class="bi bi-download"></i></button>
+                                                        <button class="btn-icon" title="删除"><i class="bi bi-trash"></i></button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>backup_20240329_010012</td>
+                                                    <td>2024-03-29 01:00:12</td>
+                                                    <td>254 MB</td>
+                                                    <td>自动备份</td>
+                                                    <td>
+                                                        <button class="btn-icon" title="恢复"><i class="bi bi-arrow-counterclockwise"></i></button>
+                                                        <button class="btn-icon" title="下载"><i class="bi bi-download"></i></button>
+                                                        <button class="btn-icon" title="删除"><i class="bi bi-trash"></i></button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>backup_20240322_010031</td>
+                                                    <td>2024-03-22 01:00:31</td>
+                                                    <td>250 MB</td>
+                                                    <td>自动备份</td>
+                                                    <td>
+                                                        <button class="btn-icon" title="恢复"><i class="bi bi-arrow-counterclockwise"></i></button>
+                                                        <button class="btn-icon" title="下载"><i class="bi bi-download"></i></button>
+                                                        <button class="btn-icon" title="删除"><i class="bi bi-trash"></i></button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-item">
+                                    <label>数据恢复</label>
+                                    <div style="margin-top: 12px; display: flex; align-items: center; gap: 16px;">
+                                        <input type="file" id="restore-file" style="display: none;">
+                                        <button class="btn btn-secondary" id="select-backup-file">
+                                            <i class="bi bi-upload"></i> 选择备份文件
+                                        </button>
+                                        <span id="selected-file-name">未选择文件</span>
+                                    </div>
+                                    <div style="margin-top: 12px;">
+                                        <button class="btn btn-danger" disabled>
+                                            <i class="bi bi-arrow-repeat"></i> 恢复数据
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div style="margin-top: 24px; text-align: right;">
+                                    <button class="btn btn-secondary" style="margin-right: 12px;">重置</button>
+                                    <button class="btn btn-primary">保存设置</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 系统日志 -->
+                <div class="tab-content" id="log-settings" style="display: none;">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">系统日志</div>
+                        </div>
+                        <div style="padding: 20px 0;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 16px;">
+                                <div style="display: flex; gap: 16px;">
+                                    <div>
+                                        <label style="margin-right: 8px;">日志类型:</label>
+                                        <select id="log-type" style="width: 150px;">
+                                            <option value="all" selected>全部日志</option>
+                                            <option value="login">登录日志</option>
+                                            <option value="operation">操作日志</option>
+                                            <option value="system">系统日志</option>
+                                            <option value="error">错误日志</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label style="margin-right: 8px;">操作人:</label>
+                                        <select id="log-operator" style="width: 150px;">
+                                            <option value="all" selected>全部人员</option>
+                                            <option value="system">系统</option>
+                                            <option value="admin">管理员</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div>
+                                    <button class="btn btn-secondary" style="margin-right: 8px;">
+                                        <i class="bi bi-download"></i> 导出日志
+                                    </button>
+                                    <button class="btn btn-danger">
+                                        <i class="bi bi-trash"></i> 清空日志
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div style="display: flex; gap: 16px; margin-bottom: 16px;">
+                                <div style="flex: 1;">
+                                    <label style="margin-right: 8px;">开始时间:</label>
+                                    <input type="date" id="log-start-date" value="2024-04-01">
+                                </div>
+                                <div style="flex: 1;">
+                                    <label style="margin-right: 8px;">结束时间:</label>
+                                    <input type="date" id="log-end-date" value="2024-04-07">
+                                </div>
+                                <div style="flex: 1;">
+                                    <label style="margin-right: 8px;">关键词:</label>
+                                    <input type="text" id="log-keyword" placeholder="搜索关键词">
+                                </div>
+                                <div>
+                                    <button class="btn btn-primary">查询</button>
+                                </div>
+                            </div>
+                            
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 180px;">时间</th>
+                                        <th style="width: 100px;">类型</th>
+                                        <th style="width: 120px;">操作人</th>
+                                        <th style="width: 120px;">IP地址</th>
+                                        <th>操作内容</th>
+                                        <th style="width: 80px;">结果</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>2024-04-07 10:15:23</td>
+                                        <td>登录日志</td>
+                                        <td>管理员</td>
+                                        <td>192.168.1.100</td>
+                                        <td>管理员登录系统</td>
+                                        <td><span class="tag tag-success">成功</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2024-04-07 10:20:15</td>
+                                        <td>操作日志</td>
+                                        <td>管理员</td>
+                                        <td>192.168.1.100</td>
+                                        <td>添加新题目: "配电线路接地故障处理方法有哪些？"</td>
+                                        <td><span class="tag tag-success">成功</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2024-04-07 10:30:42</td>
+                                        <td>操作日志</td>
+                                        <td>管理员</td>
+                                        <td>192.168.1.100</td>
+                                        <td>生成激活码，批次号: BATCH202404070001，数量: 100</td>
+                                        <td><span class="tag tag-success">成功</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2024-04-07 11:05:38</td>
+                                        <td>系统日志</td>
+                                        <td>系统</td>
+                                        <td>127.0.0.1</td>
+                                        <td>系统自动备份数据库</td>
+                                        <td><span class="tag tag-success">成功</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2024-04-06 18:45:12</td>
+                                        <td>错误日志</td>
+                                        <td>系统</td>
+                                        <td>127.0.0.1</td>
+                                        <td>数据库连接超时，自动重试连接</td>
+                                        <td><span class="tag tag-warning">警告</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2024-04-06 15:32:21</td>
+                                        <td>登录日志</td>
+                                        <td>admin2</td>
+                                        <td>192.168.1.105</td>
+                                        <td>用户尝试登录系统，密码错误</td>
+                                        <td><span class="tag tag-danger">失败</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            
+                            <!-- 分页 -->
+                            <div style="display: flex; justify-content: space-between; padding: 16px;">
+                                <div>
+                                    <label style="margin-right: 8px;">每页显示:</label>
+                                    <select style="width: 80px;">
+                                        <option>10</option>
+                                        <option selected>20</option>
+                                        <option>50</option>
+                                        <option>100</option>
+                                    </select>
+                                </div>
+                                <div class="pagination">
+                                    <button class="btn-page" disabled><i class="bi bi-chevron-double-left"></i></button>
+                                    <button class="btn-page" disabled><i class="bi bi-chevron-left"></i></button>
+                                    <button class="btn-page active">1</button>
+                                    <button class="btn-page">2</button>
+                                    <button class="btn-page">3</button>
+                                    <span>...</span>
+                                    <button class="btn-page">50</button>
+                                    <button class="btn-page"><i class="bi bi-chevron-right"></i></button>
+                                    <button class="btn-page"><i class="bi bi-chevron-double-right"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 页脚 -->
+            <div class="footer">
+                国网考试题库后台管理系统 &copy; 2024 国家电网有限公司
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 侧边栏切换
+        document.getElementById('toggle-sidebar').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.toggle('sidebar-collapsed');
+        });
+        
+        // 标签页切换
+        document.querySelectorAll('.tab').forEach(function(tab) {
+            tab.addEventListener('click', function() {
+                // 移除所有标签和内容的活动状态
+                document.querySelectorAll('.tab').forEach(function(t) {
+                    t.classList.remove('active');
+                });
+                document.querySelectorAll('.tab-content').forEach(function(content) {
+                    content.style.display = 'none';
+                });
+                
+                // 激活当前标签
+                this.classList.add('active');
+                const tabId = this.getAttribute('data-tab');
+                document.getElementById(tabId + '-settings').style.display = 'block';
+            });
+        });
+        
+        // 选择备份文件
+        document.getElementById('select-backup-file').addEventListener('click', function() {
+            document.getElementById('restore-file').click();
+        });
+        
+        document.getElementById('restore-file').addEventListener('change', function() {
+            if (this.files.length > 0) {
+                document.getElementById('selected-file-name').textContent = this.files[0].name;
+                document.querySelector('.btn-danger[disabled]').removeAttribute('disabled');
+            } else {
+                document.getElementById('selected-file-name').textContent = '未选择文件';
+                document.querySelector('.btn-danger[disabled]').setAttribute('disabled', 'disabled');
+            }
+        });
+    </script>
+</body>
+</html> 

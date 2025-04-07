@@ -1,0 +1,109 @@
+/* 调试辅助样式 */
+
+/* 确保页面容器始终有足够高度 */
+.page-container {
+    min-height: 100vh;
+    box-sizing: border-box;
+    position: relative;
+    overflow-x: hidden;
+    padding-bottom: 80px !important;
+}
+
+/* 确保底部导航栏固定定位 */
+.bottom-nav {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
+    z-index: 9999 !important;
+    transform: translateZ(0);
+    will-change: transform;
+    /* 增加更多Safari兼容性支持 */
+    -webkit-transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+}
+
+/* 确保内容不被底部导航栏遮挡 */
+html, body {
+    overflow-x: hidden;
+    /* 移除position: relative，这是导致fixed失效的主要原因 */
+    /* position: relative; */  
+    /* height: 100%; */
+    margin: 0;
+    padding: 0;
+    overscroll-behavior-y: none; /* 防止iOS橡皮筋效果 */
+    /* 确保视口高度正确 */
+    min-height: 100%;
+}
+
+/* 检查页面容器的底部内边距 */
+.check-padding {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background-color: rgba(255, 0, 0, 0.1);
+    pointer-events: none;
+    z-index: 1;
+}
+
+@media (max-width: 640px) {
+    .bottom-nav {
+        width: 100%;
+    }
+}
+
+/* 修复Safari底部安全区域问题 */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+    .bottom-nav {
+        padding-bottom: env(safe-area-inset-bottom) !important;
+        height: calc(60px + env(safe-area-inset-bottom)) !important;
+    }
+    
+    .page-container {
+        padding-bottom: calc(80px + env(safe-area-inset-bottom)) !important;
+    }
+}
+
+/* iOS设备特殊处理 */
+.ios-device .bottom-nav {
+    /* 更强力的固定定位 */
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    /* iOS硬件加速 */
+    -webkit-transform: translate3d(0,0,0) !important;
+    transform: translate3d(0,0,0) !important;
+}
+
+.ios-device .page-container {
+    /* 确保在iOS设备上内容不被导航栏遮挡 */
+    padding-bottom: 90px !important;
+}
+
+/* 强制处理底部导航栏固定在底部 */
+.prevent-scroll {
+    overflow: hidden !important;
+    position: fixed;
+    width: 100%;
+}
+
+/* 修复iOS弹性滚动问题 */
+@supports (-webkit-overflow-scrolling: touch) {
+    body {
+        -webkit-overflow-scrolling: touch;
+        overflow-x: hidden;
+        overscroll-behavior-y: none;
+    }
+    
+    .bottom-nav {
+        /* iOS设备底部导航栏加强版 */
+        -webkit-transform: translate3d(0,0,0) !important;
+        transform: translate3d(0,0,0) !important;
+    }
+} 

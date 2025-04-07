@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>国网考试题库微信小程序 - 错题本</title>
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入动效样式 -->
+    <link rel="stylesheet" href="./animation.css">
+    <link rel="stylesheet" href="./pure-nav.css">
+    <link rel="stylesheet" href="./debug.css">
+    <style>
+        /* 微信小程序风格的自定义样式 */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .mp-icon {
+            display: inline-block;
+            width: 1.5rem;
+            height: 1.5rem;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+        .icon-home { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" /></svg>'); }
+        .icon-book { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" /></svg>'); }
+        .icon-bookmark { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" /></svg>'); }
+        .icon-user { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg>'); }
+        .icon-filter { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" /></svg>'); }
+        .icon-tag { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6Z" /></svg>'); }
+        .icon-star { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" /></svg>'); }
+        .icon-star-filled { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clip-rule="evenodd" /></svg>'); }
+        .icon-clock { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>'); }
+        .icon-trash { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" /></svg>'); }
+        .icon-folder { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 0 1 4.5 9.75h15A2.25 2.25 0 0 1 21.75 12v.75m-8.69-6.44-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z" /></svg>'); }
+        .icon-back { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" /></svg>'); }
+        .icon-close { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>'); }
+        .icon-check { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>'); }
+        .icon-x-mark { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>'); }
+        .icon-fire { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 8.287 8.287 0 009 9.6a8.983 8.983 0 013.361-6.867 8.21 8.21 0 003 2.48z" /><path stroke-linecap="round" stroke-linejoin="round" d="M12 18a3.75 3.75 0 00.495-7.467 5.99 5.99 0 00-1.925 3.546 5.974 5.974 0 01-2.133-1A3.75 3.75 0 0012 18z" /></svg>'); }
+        
+        /* 进度条动画 */
+        .progress-bar {
+            position: relative;
+            overflow: hidden;
+            animation: progress-fill 1.2s ease forwards;
+        }
+        
+        @keyframes progress-fill {
+            from { width: 0; }
+            to { width: var(--progress-width); }
+        }
+        
+        /* 发光效果 */
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -50%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.5), transparent);
+            animation: progress-shine 2s infinite;
+        }
+        
+        @keyframes progress-shine {
+            0% { left: -50%; }
+            100% { left: 150%; }
+        }
+        
+        /* 错题卡片动效 */
+        .question-card {
+            transition: all 0.3s ease;
+            transform-origin: center;
+        }
+        
+        .question-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* 标签筛选动效 */
+        .filter-tag {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .filter-tag::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(0);
+            border-radius: 9999px;
+            transition: transform 0.3s ease;
+        }
+        
+        .filter-tag:active::after {
+            transform: scale(1);
+        }
+        
+        /* 图标点击效果 */
+        .action-icon {
+            transition: all 0.2s ease;
+        }
+        
+        .action-icon:active {
+            transform: scale(0.85);
+        }
+        
+        /* 查看详情按钮效果 */
+        .detail-btn {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .detail-btn::before {
+            content: '';
+            position: absolute;
+            left: -100%;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.2), transparent);
+            transition: left 0.7s ease;
+        }
+        
+        .detail-btn:hover {
+            transform: translateX(3px);
+        }
+        
+        .detail-btn:hover::before {
+            left: 100%;
+        }
+        
+        /* 答对答错状态切换动画 */
+        .status-badge {
+            transition: all 0.3s ease;
+        }
+        
+        .status-badge:hover {
+            transform: scale(1.05);
+        }
+        
+        /* 错题卡片展开动效 */
+        @keyframes card-expand {
+            from { max-height: 0; opacity: 0; }
+            to { max-height: 500px; opacity: 1; }
+        }
+        
+        .card-expand {
+            animation: card-expand 0.5s ease forwards;
+            overflow: hidden;
+        }
+        
+        /* 按钮波纹效果 */
+        .ripple-btn {
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.4);
+            transform: scale(0);
+            animation: ripple-effect 0.6s linear;
+            z-index: -1;
+        }
+        
+        @keyframes ripple-effect {
+            to {
+                transform: scale(2.5);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="max-w-md mx-auto page-container">
+        <!-- 顶部导航栏 -->
+        <div class="flex items-center px-4 py-3 bg-blue-600 text-white">
+            <a href="javascript:history.back()" class="icon-back mp-icon w-6 h-6 text-white"></a>
+            <div class="font-bold text-lg mx-auto">我的错题本</div>
+            <div class="w-6"></div>
+        </div>
+        
+        <!-- 错题统计 -->
+        <div class="bg-white p-4 shadow-sm rounded-lg">
+            <div class="flex items-center justify-between mb-3">
+                <div class="font-medium">错题统计</div>
+                <div class="text-xs text-gray-500">共32题错题</div>
+            </div>
+            
+            <!-- 掌握进度卡片 -->
+            <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg p-4 text-white mb-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <div class="font-medium">掌握进度</div>
+                        <div class="mt-1 text-xs text-blue-100">已掌握21题，继续加油！</div>
+                    </div>
+                    <div class="text-2xl font-bold">65%</div>
+                </div>
+                <div class="mt-3 relative h-2 bg-blue-200 bg-opacity-40 rounded-full overflow-hidden">
+                    <div class="absolute top-0 left-0 h-full bg-white rounded-full progress-bar" style="--progress-width: 65%;"></div>
+                </div>
+            </div>
+            
+            <!-- 错题分布 -->
+            <div class="bg-gray-50 rounded-lg p-3">
+                <div class="flex justify-between items-center mb-3">
+                    <div class="text-sm font-medium text-gray-700">错题分布</div>
+                    <a href="./CategoryPage.html" class="text-xs text-blue-600">按类别查看</a>
+                </div>
+                
+                <!-- 使用进度条可视化错题分布 -->
+                <div class="space-y-3">
+                    <!-- 电力系统 -->
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <div class="flex items-center">
+                                <div class="w-2 h-2 rounded-full bg-blue-500 mr-1"></div>
+                                <span>电力系统</span>
+                            </div>
+                            <div class="text-gray-500">14题 (43.8%)</div>
+                        </div>
+                        <div class="relative h-2 bg-gray-200 rounded-full overflow-hidden">
+                            <div class="absolute top-0 left-0 h-full bg-blue-500 rounded-full progress-bar" style="--progress-width: 43.8%;"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- 配电技术 -->
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <div class="flex items-center">
+                                <div class="w-2 h-2 rounded-full bg-green-500 mr-1"></div>
+                                <span>配电技术</span>
+                            </div>
+                            <div class="text-gray-500">10题 (31.3%)</div>
+                        </div>
+                        <div class="relative h-2 bg-gray-200 rounded-full overflow-hidden">
+                            <div class="absolute top-0 left-0 h-full bg-green-500 rounded-full progress-bar" style="--progress-width: 31.3%;"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- 继电保护 -->
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <div class="flex items-center">
+                                <div class="w-2 h-2 rounded-full bg-purple-500 mr-1"></div>
+                                <span>继电保护</span>
+                            </div>
+                            <div class="text-gray-500">5题 (15.6%)</div>
+                        </div>
+                        <div class="relative h-2 bg-gray-200 rounded-full overflow-hidden">
+                            <div class="absolute top-0 left-0 h-full bg-purple-500 rounded-full progress-bar" style="--progress-width: 15.6%;"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- 安全管理 -->
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <div class="flex items-center">
+                                <div class="w-2 h-2 rounded-full bg-red-500 mr-1"></div>
+                                <span>安全管理</span>
+                            </div>
+                            <div class="text-gray-500">3题 (9.3%)</div>
+                        </div>
+                        <div class="relative h-2 bg-gray-200 rounded-full overflow-hidden">
+                            <div class="absolute top-0 left-0 h-full bg-red-500 rounded-full progress-bar" style="--progress-width: 9.3%;"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 难度分布指示 -->
+                <div class="mt-4 flex items-center justify-between">
+                    <div class="text-xs text-gray-500">难度分布：</div>
+                    <div class="flex items-center space-x-2">
+                        <div class="flex items-center">
+                            <div class="w-2 h-2 rounded-full bg-green-400 mr-1"></div>
+                            <span class="text-xs">简单(6)</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-2 h-2 rounded-full bg-yellow-400 mr-1"></div>
+                            <span class="text-xs">中等(18)</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-2 h-2 rounded-full bg-red-400 mr-1"></div>
+                            <span class="text-xs">困难(8)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 错题分类筛选标签 -->
+        <div class="bg-white px-4 py-3 mt-3 sticky top-0 z-10 shadow-sm">
+            <div class="flex overflow-x-auto whitespace-nowrap -mx-1 pb-1">
+                <div class="px-3 py-1.5 rounded-full bg-blue-600 text-white text-sm mx-1 flex-shrink-0 filter-tag">
+                    全部错题
+                </div>
+                <div class="px-3 py-1.5 rounded-full bg-gray-100 text-gray-700 text-sm mx-1 flex-shrink-0 filter-tag">
+                    未掌握
+                </div>
+                <div class="px-3 py-1.5 rounded-full bg-gray-100 text-gray-700 text-sm mx-1 flex-shrink-0 filter-tag">
+                    已掌握
+                </div>
+                <div class="px-3 py-1.5 rounded-full bg-gray-100 text-gray-700 text-sm mx-1 flex-shrink-0 filter-tag">
+                    电力系统
+                </div>
+                <div class="px-3 py-1.5 rounded-full bg-gray-100 text-gray-700 text-sm mx-1 flex-shrink-0 filter-tag">
+                    配电技术
+                </div>
+            </div>
+        </div>
+        
+        <!-- 功能栏 -->
+        <div class="px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center text-sm text-gray-600">
+                <div class="icon-filter mp-icon w-4 h-4 mr-1"></div>
+                <div>排序: 最近错误</div>
+            </div>
+            <div class="flex space-x-3">
+                <button class="bg-blue-600 text-white px-3 py-1.5 rounded-lg text-sm ripple-btn" onclick="location.href='./ExercisePage.html'">巩固练习</button>
+                <button class="border border-gray-300 text-gray-600 px-3 py-1.5 rounded-lg text-sm ripple-btn">清空记录</button>
+            </div>
+        </div>
+        
+        <!-- 错题列表 -->
+        <div class="px-4 py-2">
+            <!-- 错题1 - 未掌握 -->
+            <div class="bg-white rounded-lg shadow-sm p-4 mb-3 question-card">
+                <div class="flex justify-between">
+                    <div class="flex items-center">
+                        <div class="bg-red-100 text-red-600 text-xs font-medium px-2 py-0.5 rounded status-badge">
+                            未掌握
+                        </div>
+                        <div class="ml-2 text-xs text-gray-500 flex items-center">
+                            <div class="icon-clock mp-icon w-3 h-3 mr-0.5"></div>
+                            今天
+                        </div>
+                    </div>
+                    <div class="flex space-x-2">
+                        <div class="icon-star mp-icon w-5 h-5 text-gray-400 action-icon"></div>
+                        <div class="icon-trash mp-icon w-5 h-5 text-gray-400 action-icon"></div>
+                    </div>
+                </div>
+                
+                <div class="mt-2 text-sm text-gray-800">
+                    变电站中使用的SF6断路器的主要优点是什么？
+                </div>
+                
+                <!-- 题目标签 -->
+                <div class="mt-2 flex flex-wrap gap-2">
+                    <div class="px-2 py-0.5 bg-gray-100 rounded text-xs text-gray-600 flex items-center">
+                        <div class="icon-tag mp-icon w-3 h-3 mr-1"></div>
+                        电力系统
+                    </div>
+                    <div class="px-2 py-0.5 bg-gray-100 rounded text-xs text-gray-600 flex items-center">
+                        <div class="icon-tag mp-icon w-3 h-3 mr-1"></div>
+                        断路器
+                    </div>
+                </div>
+                
+                <!-- 错误记录 -->
+                <div class="mt-3 flex text-xs">
+                    <div class="bg-gray-100 rounded-lg px-3 py-2 flex-1">
+                        <div class="flex items-center mb-1">
+                            <div class="icon-x-mark mp-icon w-3.5 h-3.5 text-red-500 mr-1"></div>
+                            <div class="text-gray-600">您的答案: B. 体积小巧，安装简便</div>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="icon-check mp-icon w-3.5 h-3.5 text-green-500 mr-1"></div>
+                            <div class="text-gray-600">正确答案: D. 灭弧能力强，可靠性高</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-3 flex justify-end">
+                    <button class="flex items-center text-xs text-blue-600 font-medium detail-btn" onclick="location.href='./ExercisePage.html'">
+                        <span>查看详情</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3 ml-1">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 错题2 - 已掌握 -->
+            <div class="bg-white rounded-lg shadow-sm p-4 mb-3 question-card">
+                <div class="flex justify-between">
+                    <div class="flex items-center">
+                        <div class="bg-green-100 text-green-600 text-xs font-medium px-2 py-0.5 rounded status-badge">
+                            已掌握
+                        </div>
+                        <div class="ml-2 text-xs text-gray-500 flex items-center">
+                            <div class="icon-clock mp-icon w-3 h-3 mr-0.5"></div>
+                            昨天
+                        </div>
+                    </div>
+                    <div class="flex space-x-2">
+                        <div class="icon-star mp-icon w-5 h-5 text-gray-400 action-icon"></div>
+                        <div class="icon-trash mp-icon w-5 h-5 text-gray-400 action-icon"></div>
+                    </div>
+                </div>
+                
+                <div class="mt-2 text-sm text-gray-800">
+                    下列哪种电缆适用于高压输电线路？
+                </div>
+                
+                <!-- 题目标签 -->
+                <div class="mt-2 flex flex-wrap gap-2">
+                    <div class="px-2 py-0.5 bg-gray-100 rounded text-xs text-gray-600 flex items-center">
+                        <div class="icon-tag mp-icon w-3 h-3 mr-1"></div>
+                        输电线路
+                    </div>
+                </div>
+                
+                <!-- 错误记录 -->
+                <div class="mt-3 flex text-xs">
+                    <div class="bg-gray-100 rounded-lg px-3 py-2 flex-1">
+                        <div class="flex items-center mb-1">
+                            <div class="icon-x-mark mp-icon w-3.5 h-3.5 text-red-500 mr-1"></div>
+                            <div class="text-gray-600">您的答案: A. PVC绝缘电缆</div>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="icon-check mp-icon w-3.5 h-3.5 text-green-500 mr-1"></div>
+                            <div class="text-gray-600">正确答案: C. XLPE交联聚乙烯绝缘电缆</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 连续答对次数 -->
+                <div class="mt-3">
+                    <div class="flex items-center text-xs text-green-600">
+                        <div class="icon-fire mp-icon w-3.5 h-3.5 mr-1"></div>
+                        <div>连续答对3次，已掌握</div>
+                    </div>
+                </div>
+                
+                <div class="mt-2 flex justify-end">
+                    <button class="flex items-center text-xs text-blue-600 font-medium detail-btn" onclick="location.href='./ExercisePage.html'">
+                        <span>查看详情</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3 ml-1">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 错题3 - 未掌握 -->
+            <div class="bg-white rounded-lg shadow-sm p-4 mb-3 question-card">
+                <div class="flex justify-between">
+                    <div class="flex items-center">
+                        <div class="bg-red-100 text-red-600 text-xs font-medium px-2 py-0.5 rounded status-badge">
+                            未掌握
+                        </div>
+                        <div class="ml-2 text-xs text-gray-500 flex items-center">
+                            <div class="icon-clock mp-icon w-3 h-3 mr-0.5"></div>
+                            3天前
+                        </div>
+                    </div>
+                    <div class="flex space-x-2">
+                        <div class="icon-star mp-icon w-5 h-5 text-gray-400 action-icon"></div>
+                        <div class="icon-trash mp-icon w-5 h-5 text-gray-400 action-icon"></div>
+                    </div>
+                </div>
+                
+                <div class="mt-2 text-sm text-gray-800">
+                    配电网自动化系统中，FTU的主要功能是什么？
+                </div>
+                
+                <!-- 题目标签 -->
+                <div class="mt-2 flex flex-wrap gap-2">
+                    <div class="px-2 py-0.5 bg-gray-100 rounded text-xs text-gray-600 flex items-center">
+                        <div class="icon-tag mp-icon w-3 h-3 mr-1"></div>
+                        配电技术
+                    </div>
+                    <div class="px-2 py-0.5 bg-gray-100 rounded text-xs text-gray-600 flex items-center">
+                        <div class="icon-tag mp-icon w-3 h-3 mr-1"></div>
+                        自动化
+                    </div>
+                </div>
+                
+                <!-- 错误记录 -->
+                <div class="mt-3 flex text-xs">
+                    <div class="bg-gray-100 rounded-lg px-3 py-2 flex-1">
+                        <div class="flex items-center mb-1">
+                            <div class="icon-x-mark mp-icon w-3.5 h-3.5 text-red-500 mr-1"></div>
+                            <div class="text-gray-600">您的答案: A. 变电站自动控制</div>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="icon-check mp-icon w-3.5 h-3.5 text-green-500 mr-1"></div>
+                            <div class="text-gray-600">正确答案: C. 馈线终端监测与控制</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-3 flex justify-end">
+                    <button class="flex items-center text-xs text-blue-600 font-medium detail-btn" onclick="location.href='./ExercisePage.html'">
+                        <span>查看详情</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3 ml-1">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 查看更多 -->
+            <div class="text-center py-3">
+                <div class="text-sm text-blue-600">查看更多错题</div>
+            </div>
+        </div>
+    </div>
+        
+    <!-- 底部导航栏 -->
+    <div class="bottom-nav">
+        <!-- 首页 -->
+        <a href="./HomePage.html" class="bottom-nav-item">
+            <div class="w-6 h-6 flex items-center justify-center">
+                <div class="icon-home mp-icon w-6 h-6 text-gray-500"></div>
+            </div>
+            <div class="text-xs mt-1 text-gray-500">首页</div>
+        </a>
+        
+        <!-- 题库 -->
+        <a href="./QuestionBankPage.html" class="bottom-nav-item">
+            <div class="w-6 h-6 flex items-center justify-center">
+                <div class="icon-book mp-icon w-6 h-6 text-gray-500"></div>
+            </div>
+            <div class="text-xs mt-1 text-gray-500">题库</div>
+        </a>
+        
+        <!-- 错题本 -->
+        <a href="./WrongQuestionsPage.html" class="bottom-nav-item bottom-nav-active">
+            <div class="w-6 h-6 flex items-center justify-center">
+                <div class="icon-bookmark mp-icon w-6 h-6 text-blue-600"></div>
+            </div>
+            <div class="text-xs mt-1 text-blue-600">错题</div>
+        </a>
+        
+        <!-- 我的 -->
+        <a href="./PersonalCenterPage.html" class="bottom-nav-item">
+            <div class="w-6 h-6 flex items-center justify-center">
+                <div class="icon-user mp-icon w-6 h-6 text-gray-500"></div>
+            </div>
+            <div class="text-xs mt-1 text-gray-500">我的</div>
+        </a>
+    </div>
+
+    <!-- 添加动效脚本 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 进度条动画初始化
+            const progressBars = document.querySelectorAll('.progress-bar');
+            progressBars.forEach(bar => {
+                const width = bar.style.getPropertyValue('--progress-width') || '50%';
+                bar.style.width = '0';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 300);
+            });
+            
+            // 错题卡片展示动画
+            const questionCards = document.querySelectorAll('.question-card');
+            questionCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'all 0.3s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 100 + (index * 150));
+            });
+            
+            // 筛选标签点击效果
+            const filterTags = document.querySelectorAll('.filter-tag');
+            filterTags.forEach(tag => {
+                tag.addEventListener('click', function() {
+                    // 移除其他所有标签的选中状态
+                    filterTags.forEach(t => {
+                        t.classList.remove('bg-blue-600', 'text-white');
+                        t.classList.add('bg-gray-100', 'text-gray-700');
+                    });
+                    
+                    // 设置当前标签为选中状态
+                    this.classList.remove('bg-gray-100', 'text-gray-700');
+                    this.classList.add('bg-blue-600', 'text-white');
+                    
+                    // 模拟标签过滤效果
+                    const filterType = this.textContent.trim();
+                    filterQuestions(filterType);
+                });
+            });
+            
+            // 图标交互效果
+            const actionIcons = document.querySelectorAll('.action-icon');
+            actionIcons.forEach(icon => {
+                icon.addEventListener('click', function(e) {
+                    e.stopPropagation(); // 阻止冒泡
+                    
+                    // 收藏按钮效果
+                    if (this.classList.contains('icon-star')) {
+                        this.classList.toggle('text-gray-400');
+                        this.classList.toggle('text-yellow-500');
+                        
+                        if (this.classList.contains('text-yellow-500')) {
+                            showToast('已添加到收藏');
+                        } else {
+                            showToast('已取消收藏');
+                        }
+                    }
+                    
+                    // 删除按钮效果
+                    if (this.classList.contains('icon-trash')) {
+                        const card = this.closest('.question-card');
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateX(100px)';
+                        
+                        setTimeout(() => {
+                            card.style.height = '0';
+                            card.style.margin = '0';
+                            card.style.padding = '0';
+                            setTimeout(() => {
+                                card.remove();
+                                showToast('已删除错题');
+                            }, 300);
+                        }, 300);
+                    }
+                });
+            });
+            
+            // 添加波纹效果
+            const rippleButtons = document.querySelectorAll('.ripple-btn');
+            rippleButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const ripple = document.createElement('span');
+                    ripple.classList.add('ripple');
+                    
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    ripple.style.width = ripple.style.height = `${size}px`;
+                    ripple.style.left = `${x}px`;
+                    ripple.style.top = `${y}px`;
+                    
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
+            
+            // 错题详情展开效果
+            const detailBtns = document.querySelectorAll('.detail-btn');
+            detailBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // 这里只是模拟效果，因为我们在点击后会跳转页面
+                    this.classList.add('text-blue-800');
+                });
+            });
+            
+            // 模拟筛选功能
+            function filterQuestions(type) {
+                const cards = document.querySelectorAll('.question-card');
+                
+                // 显示所有卡片的过渡效果
+                cards.forEach(card => {
+                    card.style.opacity = '0.5';
+                    card.style.transform = 'scale(0.98)';
+                });
+                
+                setTimeout(() => {
+                    cards.forEach(card => {
+                        const statusBadge = card.querySelector('.status-badge');
+                        const tags = card.querySelectorAll('.icon-tag');
+                        let shouldShow = true;
+                        
+                        if (type === '未掌握') {
+                            shouldShow = statusBadge.textContent.trim() === '未掌握';
+                        } else if (type === '已掌握') {
+                            shouldShow = statusBadge.textContent.trim() === '已掌握';
+                        } else if (type === '电力系统' || type === '配电技术') {
+                            shouldShow = false;
+                            tags.forEach(tag => {
+                                if (tag.nextElementSibling.textContent.trim() === type) {
+                                    shouldShow = true;
+                                }
+                            });
+                        }
+                        
+                        if (shouldShow || type === '全部错题') {
+                            card.style.display = '';
+                            setTimeout(() => {
+                                card.style.opacity = '1';
+                                card.style.transform = 'scale(1)';
+                            }, 50);
+                        } else {
+                            setTimeout(() => {
+                                card.style.display = 'none';
+                            }, 300);
+                        }
+                    });
+                }, 300);
+                
+                showToast(`已筛选: ${type}`);
+            }
+            
+            // Toast提示
+            function showToast(message) {
+                const toast = document.createElement('div');
+                toast.className = 'fixed top-20 left-1/2 transform -translate-x-1/2 px-4 py-2 rounded-full text-white text-sm bg-gray-800 z-50 opacity-0';
+                toast.textContent = message;
+                document.body.appendChild(toast);
+                
+                setTimeout(() => {
+                    toast.style.transition = 'all 0.3s ease';
+                    toast.style.opacity = '1';
+                }, 10);
+                
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    setTimeout(() => {
+                        document.body.removeChild(toast);
+                    }, 300);
+                }, 2000);
+            }
+        });
+    </script>
+
+    <!-- 修复样式和脚本 -->
+    <link rel="stylesheet" href="./fixnav.css">
+    <script src="./fixnav.js"></script>
+</body>
+</html> 

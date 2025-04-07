@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>国网考试题库后台管理系统 - 数据分析</title>
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+    <div class="layout">
+        <!-- 侧边栏 -->
+        <div class="sidebar">
+            <div class="system-logo">
+                <img src="https://via.placeholder.com/32x32?text=Logo" alt="Logo">
+                <span class="system-logo-text">国网考试题库</span>
+            </div>
+            <ul class="menu">
+                <li class="menu-item">
+                    <a href="dashboard.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-speedometer2"></i></span>
+                        <span class="menu-text">仪表盘</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="category-management.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-folder2"></i></span>
+                        <span class="menu-text">分类管理</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="question-management.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-file-earmark-text"></i></span>
+                        <span class="menu-text">题目管理</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="tag-management.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-tags"></i></span>
+                        <span class="menu-text">标签管理</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="activation-code.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-key"></i></span>
+                        <span class="menu-text">激活码管理</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="user-management.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-people"></i></span>
+                        <span class="menu-text">用户管理</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="data-analysis.html" class="menu-link active">
+                        <span class="menu-icon"><i class="bi bi-bar-chart"></i></span>
+                        <span class="menu-text">数据分析</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="system-settings.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-gear"></i></span>
+                        <span class="menu-text">系统设置</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 主内容区 -->
+        <div class="main-content">
+            <!-- 顶部导航栏 -->
+            <div class="navbar">
+                <div class="nav-left">
+                    <button class="btn btn-secondary" id="toggle-sidebar">
+                        <i class="bi bi-list"></i>
+                    </button>
+                    <div class="breadcrumb">
+                        <div class="breadcrumb-item"><a href="dashboard.html">首页</a></div>
+                        <div class="breadcrumb-item active">数据分析</div>
+                    </div>
+                </div>
+                <div class="nav-right">
+                    <div class="user-dropdown">
+                        <span><i class="bi bi-person-circle"></i> 管理员 <i class="bi bi-chevron-down"></i></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 内容区域 -->
+            <div class="content">
+                <div class="page-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                    <h1>数据分析</h1>
+                    <div>
+                        <button class="btn btn-secondary" style="margin-right: 12px;">
+                            <i class="bi bi-download"></i> 导出报表
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 时间范围选择 -->
+                <div class="card" style="margin-bottom: 24px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div style="display: flex; align-items: center; gap: 16px;">
+                            <div>
+                                <label style="margin-right: 8px; font-weight: 500;">时间范围:</label>
+                                <select id="date-range" style="width: 150px; margin-right: 16px;">
+                                    <option value="7">最近7天</option>
+                                    <option value="30" selected>最近30天</option>
+                                    <option value="90">最近90天</option>
+                                    <option value="180">最近半年</option>
+                                    <option value="365">最近一年</option>
+                                    <option value="custom">自定义</option>
+                                </select>
+                            </div>
+                            <div id="custom-date-range" style="display: flex; align-items: center; gap: 8px;">
+                                <input type="date" id="date-start" value="2024-03-07">
+                                <span>至</span>
+                                <input type="date" id="date-end" value="2024-04-07">
+                            </div>
+                        </div>
+                        <div>
+                            <button class="btn btn-primary">应用</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 数据概览 -->
+                <div class="dashboard-cards">
+                    <div class="stat-card">
+                        <div class="stat-card-title">总用户数</div>
+                        <div class="stat-card-value">4,782</div>
+                        <div class="stat-card-desc">
+                            <span class="trend-up"><i class="bi bi-arrow-up"></i> 8.5%</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-title">新增用户</div>
+                        <div class="stat-card-value">374</div>
+                        <div class="stat-card-desc">
+                            <span class="trend-up"><i class="bi bi-arrow-up"></i> 12.3%</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-title">活跃用户</div>
+                        <div class="stat-card-value">1,952</div>
+                        <div class="stat-card-desc">
+                            <span class="trend-down"><i class="bi bi-arrow-down"></i> 2.1%</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-title">完成率</div>
+                        <div class="stat-card-value">73.2%</div>
+                        <div class="stat-card-desc">
+                            <span class="trend-up"><i class="bi bi-arrow-up"></i> 4.5%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 用户增长趋势图 -->
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <div class="chart-title">用户增长趋势</div>
+                        <div>
+                            <select id="user-trend-type">
+                                <option value="total" selected>总用户数</option>
+                                <option value="new">新增用户</option>
+                                <option value="active">活跃用户</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="chart-body" style="background-color: #f5f5f5; display: flex; justify-content: center; align-items: center;">
+                        图表区域 - 用户增长趋势图
+                    </div>
+                </div>
+                
+                <!-- 使用数据分析 -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px;">
+                    <!-- 题库使用分布 -->
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <div class="chart-title">题库使用分布</div>
+                            <div>
+                                <select id="bank-usage-view">
+                                    <option value="access" selected>访问次数</option>
+                                    <option value="time">使用时长</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="chart-body" style="background-color: #f5f5f5; display: flex; justify-content: center; align-items: center;">
+                            图表区域 - 题库使用分布
+                        </div>
+                    </div>
+                    
+                    <!-- 用户完成率分布 -->
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <div class="chart-title">用户正确率分布</div>
+                            <div>
+                                <select id="completion-distribution">
+                                    <option value="all" selected>全部题库</option>
+                                    <option value="1">电力系统基础</option>
+                                    <option value="2">配电技术</option>
+                                    <option value="3">安全管理</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="chart-body" style="background-color: #f5f5f5; display: flex; justify-content: center; align-items: center;">
+                            图表区域 - 用户正确率分布
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 使用时段分析 -->
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <div class="chart-title">用户使用时段分析</div>
+                        <div>
+                            <select id="usage-time-type">
+                                <option value="weekly" selected>周分布</option>
+                                <option value="daily">日分布</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="chart-body" style="background-color: #f5f5f5; display: flex; justify-content: center; align-items: center;">
+                        图表区域 - 用户使用时段分析
+                    </div>
+                </div>
+                
+                <!-- 难度分析 -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px;">
+                    <!-- 错题集中度分析 -->
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <div class="chart-title">错题集中度分析</div>
+                            <div>
+                                <select id="wrong-answer-type">
+                                    <option value="all" selected>全部题库</option>
+                                    <option value="1">电力系统基础</option>
+                                    <option value="2">配电技术</option>
+                                    <option value="3">安全管理</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="chart-body" style="background-color: #f5f5f5; display: flex; justify-content: center; align-items: center;">
+                            图表区域 - 错题集中度分析
+                        </div>
+                    </div>
+                    
+                    <!-- 平均答题时间 -->
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <div class="chart-title">平均答题时间</div>
+                            <div>
+                                <select id="avg-time-type">
+                                    <option value="all" selected>全部题型</option>
+                                    <option value="single">单选题</option>
+                                    <option value="multiple">多选题</option>
+                                    <option value="judge">判断题</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="chart-body" style="background-color: #f5f5f5; display: flex; justify-content: center; align-items: center;">
+                            图表区域 - 平均答题时间
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 地区分布 -->
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <div class="chart-title">用户地区分布</div>
+                        <div>
+                            <select id="region-type">
+                                <option value="province" selected>省份分布</option>
+                                <option value="city">城市分布</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="chart-body" style="background-color: #f5f5f5; display: flex; justify-content: center; align-items: center;">
+                        图表区域 - 用户地区分布
+                    </div>
+                </div>
+                
+                <!-- 智能报告 -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">分析报告</div>
+                    </div>
+                    <div style="padding: 16px 0;">
+                        <h4 style="margin-bottom: 12px;">用户增长分析</h4>
+                        <p style="margin-bottom: 16px;">过去30天内，平台总用户数增长了8.5%，新增用户374人，环比上升12.3%。用户增长主要来自微信渠道，占比达到73%。建议加强微信小程序的推广和体验优化。</p>
+                        
+                        <h4 style="margin-bottom: 12px;">题库使用分析</h4>
+                        <p style="margin-bottom: 16px;">《电力系统基础》题库是最受欢迎的题库，占总使用量的42%。《配电技术》题库使用量环比增长最快，达到18.2%。《继电保护》题库的平均完成率最低，仅为65.3%，建议针对此题库进行难度调整。</p>
+                        
+                        <h4 style="margin-bottom: 12px;">用户行为分析</h4>
+                        <p style="margin-bottom: 16px;">用户主要在工作日的晚间学习（19:00-22:00），周末的使用时长较工作日增加35%。移动端用户占比达78.3%，相比上月提升了5.2个百分点。建议进一步优化移动端体验。</p>
+                        
+                        <h4 style="margin-bottom: 12px;">存在问题与建议</h4>
+                        <ul style="padding-left: 20px; margin-bottom: 16px;">
+                            <li style="margin-bottom: 8px;">部分高难度题目正确率过低（&lt;30%），建议检查题目质量或调整难度分级</li>
+                            <li style="margin-bottom: 8px;">用户留存率环比下降3.5%，建议增加互动功能和激励机制</li>
+                            <li style="margin-bottom: 8px;">部分地区（西北、东北）用户增长缓慢，建议针对这些地区开展定向营销活动</li>
+                            <li>付费转化率（17.9%）低于行业平均水平，建议优化会员权益或调整定价策略</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 页脚 -->
+            <div class="footer">
+                国网考试题库后台管理系统 &copy; 2024 国家电网有限公司
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 侧边栏切换
+        document.getElementById('toggle-sidebar').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.toggle('sidebar-collapsed');
+        });
+        
+        // 日期范围选择
+        document.getElementById('date-range').addEventListener('change', function() {
+            const customDateRange = document.getElementById('custom-date-range');
+            if (this.value === 'custom') {
+                customDateRange.style.display = 'flex';
+            } else {
+                customDateRange.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html> 

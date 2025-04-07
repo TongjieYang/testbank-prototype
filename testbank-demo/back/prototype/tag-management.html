@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>国网考试题库后台管理系统 - 标签管理</title>
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+    <div class="layout">
+        <!-- 侧边栏 -->
+        <div class="sidebar">
+            <div class="system-logo">
+                <img src="https://via.placeholder.com/32x32?text=Logo" alt="Logo">
+                <span class="system-logo-text">国网考试题库</span>
+            </div>
+            <ul class="menu">
+                <li class="menu-item">
+                    <a href="dashboard.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-speedometer2"></i></span>
+                        <span class="menu-text">仪表盘</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="category-management.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-folder2"></i></span>
+                        <span class="menu-text">分类管理</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="question-management.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-file-earmark-text"></i></span>
+                        <span class="menu-text">题目管理</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="tag-management.html" class="menu-link active">
+                        <span class="menu-icon"><i class="bi bi-tags"></i></span>
+                        <span class="menu-text">标签管理</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="activation-code.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-key"></i></span>
+                        <span class="menu-text">激活码管理</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="user-management.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-people"></i></span>
+                        <span class="menu-text">用户管理</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="data-analysis.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-bar-chart"></i></span>
+                        <span class="menu-text">数据分析</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="system-settings.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-gear"></i></span>
+                        <span class="menu-text">系统设置</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 主内容区 -->
+        <div class="main-content">
+            <!-- 顶部导航栏 -->
+            <div class="navbar">
+                <div class="nav-left">
+                    <button class="btn btn-secondary" id="toggle-sidebar">
+                        <i class="bi bi-list"></i>
+                    </button>
+                    <div class="breadcrumb">
+                        <div class="breadcrumb-item"><a href="dashboard.html">首页</a></div>
+                        <div class="breadcrumb-item active">标签管理</div>
+                    </div>
+                </div>
+                <div class="nav-right">
+                    <div class="search-box">
+                        <span class="search-icon"><i class="bi bi-search"></i></span>
+                        <input type="text" class="search-input" placeholder="搜索标签...">
+                    </div>
+                    <div class="user-dropdown" style="margin-left: 20px;">
+                        <span><i class="bi bi-person-circle"></i> 管理员 <i class="bi bi-chevron-down"></i></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 内容区域 -->
+            <div class="content">
+                <div class="page-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                    <h1>标签管理</h1>
+                    <div>
+                        <button class="btn btn-primary" id="create-tag">
+                            <i class="bi bi-plus"></i> 创建标签
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 统计卡片 -->
+                <div class="dashboard-cards">
+                    <div class="stat-card">
+                        <div class="stat-card-title">标签总数</div>
+                        <div class="stat-card-value">256</div>
+                        <div class="stat-card-desc">
+                            <span class="trend-up"><i class="bi bi-arrow-up"></i> 12% 较上月</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-title">最多使用</div>
+                        <div class="stat-card-value">配电线路</div>
+                        <div class="stat-card-desc">
+                            <span>使用次数: 489</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-title">本月新增</div>
+                        <div class="stat-card-value">23</div>
+                        <div class="stat-card-desc">
+                            <span class="trend-up"><i class="bi bi-arrow-up"></i> 5% 较上月</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-title">未使用标签</div>
+                        <div class="stat-card-value">18</div>
+                        <div class="stat-card-desc">
+                            <span>占总数: 7.03%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 标签类型筛选 -->
+                <div class="card" style="margin-bottom: 24px;">
+                    <div class="card-header">
+                        <div class="card-title">标签分类</div>
+                    </div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px;">
+                        <button class="btn btn-primary">全部标签 (256)</button>
+                        <button class="btn btn-secondary">知识点 (78)</button>
+                        <button class="btn btn-secondary">难度 (4)</button>
+                        <button class="btn btn-secondary">题型 (12)</button>
+                        <button class="btn btn-secondary">技能 (45)</button>
+                        <button class="btn btn-secondary">设备 (67)</button>
+                        <button class="btn btn-secondary">专业 (34)</button>
+                        <button class="btn btn-secondary">其他 (16)</button>
+                    </div>
+                </div>
+                
+                <!-- 标签列表 -->
+                <div class="card">
+                    <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+                        <div class="card-title">标签列表</div>
+                        <div>
+                            <span style="margin-right: 16px;">共 256 条记录</span>
+                            <button class="btn btn-secondary btn-sm" style="margin-right: 8px;">
+                                <i class="bi bi-arrow-repeat"></i> 刷新
+                            </button>
+                            <div class="dropdown" style="display: inline-block;">
+                                <button class="btn btn-secondary btn-sm">
+                                    批量操作 <i class="bi bi-chevron-down"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th style="width: 40px;">
+                                    <input type="checkbox" id="select-all">
+                                </th>
+                                <th style="width: 180px;">标签名称</th>
+                                <th style="width: 120px;">标签类型</th>
+                                <th style="width: 100px;">使用次数</th>
+                                <th>标签描述</th>
+                                <th style="width: 120px;">创建时间</th>
+                                <th style="width: 120px;">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- 标签1 -->
+                            <tr>
+                                <td><input type="checkbox" class="select-item"></td>
+                                <td>配电线路</td>
+                                <td><span class="tag tag-primary">知识点</span></td>
+                                <td>489</td>
+                                <td>涉及配电线路相关知识的题目</td>
+                                <td>2023-10-15</td>
+                                <td>
+                                    <button class="btn-icon" title="查看" data-id="1"><i class="bi bi-eye"></i></button>
+                                    <button class="btn-icon" title="编辑" data-id="1"><i class="bi bi-pencil"></i></button>
+                                    <button class="btn-icon" title="删除" data-id="1"><i class="bi bi-trash"></i></button>
+                                </td>
+                            </tr>
+                            
+                            <!-- 标签2 -->
+                            <tr>
+                                <td><input type="checkbox" class="select-item"></td>
+                                <td>变压器</td>
+                                <td><span class="tag tag-primary">知识点</span></td>
+                                <td>387</td>
+                                <td>变压器结构与原理相关题目</td>
+                                <td>2023-09-22</td>
+                                <td>
+                                    <button class="btn-icon" title="查看" data-id="2"><i class="bi bi-eye"></i></button>
+                                    <button class="btn-icon" title="编辑" data-id="2"><i class="bi bi-pencil"></i></button>
+                                    <button class="btn-icon" title="删除" data-id="2"><i class="bi bi-trash"></i></button>
+                                </td>
+                            </tr>
+                            
+                            <!-- 标签3 -->
+                            <tr>
+                                <td><input type="checkbox" class="select-item"></td>
+                                <td>简单</td>
+                                <td><span class="tag tag-success">难度</span></td>
+                                <td>356</td>
+                                <td>难度系数低的基础题目</td>
+                                <td>2023-08-30</td>
+                                <td>
+                                    <button class="btn-icon" title="查看" data-id="3"><i class="bi bi-eye"></i></button>
+                                    <button class="btn-icon" title="编辑" data-id="3"><i class="bi bi-pencil"></i></button>
+                                    <button class="btn-icon" title="删除" data-id="3"><i class="bi bi-trash"></i></button>
+                                </td>
+                            </tr>
+                            
+                            <!-- 标签4 -->
+                            <tr>
+                                <td><input type="checkbox" class="select-item"></td>
+                                <td>单选题</td>
+                                <td><span class="tag tag-warning">题型</span></td>
+                                <td>325</td>
+                                <td>单项选择题题型</td>
+                                <td>2023-08-30</td>
+                                <td>
+                                    <button class="btn-icon" title="查看" data-id="4"><i class="bi bi-eye"></i></button>
+                                    <button class="btn-icon" title="编辑" data-id="4"><i class="bi bi-pencil"></i></button>
+                                    <button class="btn-icon" title="删除" data-id="4"><i class="bi bi-trash"></i></button>
+                                </td>
+                            </tr>
+                            
+                            <!-- 标签5 -->
+                            <tr>
+                                <td><input type="checkbox" class="select-item"></td>
+                                <td>继电保护</td>
+                                <td><span class="tag tag-primary">知识点</span></td>
+                                <td>298</td>
+                                <td>继电保护装置相关知识</td>
+                                <td>2023-11-05</td>
+                                <td>
+                                    <button class="btn-icon" title="查看" data-id="5"><i class="bi bi-eye"></i></button>
+                                    <button class="btn-icon" title="编辑" data-id="5"><i class="bi bi-pencil"></i></button>
+                                    <button class="btn-icon" title="删除" data-id="5"><i class="bi bi-trash"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <!-- 分页 -->
+                    <div style="display: flex; justify-content: space-between; padding: 16px;">
+                        <div>
+                            <label style="margin-right: 8px;">每页显示:</label>
+                            <select style="width: 80px;">
+                                <option>10</option>
+                                <option selected>20</option>
+                                <option>50</option>
+                                <option>100</option>
+                            </select>
+                        </div>
+                        <div class="pagination">
+                            <button class="btn-page" disabled><i class="bi bi-chevron-double-left"></i></button>
+                            <button class="btn-page" disabled><i class="bi bi-chevron-left"></i></button>
+                            <button class="btn-page active">1</button>
+                            <button class="btn-page">2</button>
+                            <button class="btn-page">3</button>
+                            <span>...</span>
+                            <button class="btn-page">13</button>
+                            <button class="btn-page"><i class="bi bi-chevron-right"></i></button>
+                            <button class="btn-page"><i class="bi bi-chevron-double-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 页脚 -->
+            <div class="footer">
+                国网考试题库后台管理系统 &copy; 2024 国家电网有限公司
+            </div>
+        </div>
+    </div>
+    
+    <!-- 创建/编辑标签弹窗 -->
+    <div class="modal" id="tag-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">创建标签</h3>
+                    <button class="modal-close"><i class="bi bi-x-lg"></i></button>
+                </div>
+                <div class="modal-body">
+                    <form id="tag-form">
+                        <div class="form-item">
+                            <label for="tag-name">标签名称</label>
+                            <input type="text" id="tag-name" name="name" placeholder="输入标签名称">
+                        </div>
+                        
+                        <div class="form-item">
+                            <label for="tag-type">标签类型</label>
+                            <select id="tag-type" name="type">
+                                <option value="knowledge">知识点</option>
+                                <option value="difficulty">难度</option>
+                                <option value="question-type">题型</option>
+                                <option value="skill">技能</option>
+                                <option value="equipment">设备</option>
+                                <option value="major">专业</option>
+                                <option value="other">其他</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-item">
+                            <label for="tag-color">标签颜色</label>
+                            <div style="display: flex; gap: 10px; margin-top: 8px;">
+                                <div style="display: flex; align-items: center;">
+                                    <input type="radio" id="color-blue" name="color" value="primary" checked>
+                                    <label for="color-blue" style="margin-left: 5px;"><span class="tag tag-primary">蓝色</span></label>
+                                </div>
+                                <div style="display: flex; align-items: center;">
+                                    <input type="radio" id="color-green" name="color" value="success">
+                                    <label for="color-green" style="margin-left: 5px;"><span class="tag tag-success">绿色</span></label>
+                                </div>
+                                <div style="display: flex; align-items: center;">
+                                    <input type="radio" id="color-orange" name="color" value="warning">
+                                    <label for="color-orange" style="margin-left: 5px;"><span class="tag tag-warning">橙色</span></label>
+                                </div>
+                                <div style="display: flex; align-items: center;">
+                                    <input type="radio" id="color-red" name="color" value="danger">
+                                    <label for="color-red" style="margin-left: 5px;"><span class="tag tag-danger">红色</span></label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-item">
+                            <label for="tag-description">标签描述</label>
+                            <textarea id="tag-description" name="description" rows="3" placeholder="输入标签描述信息"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 标签详情弹窗 -->
+    <div class="modal" id="tag-detail-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">标签详情</h3>
+                    <button class="modal-close"><i class="bi bi-x-lg"></i></button>
+                </div>
+                <div class="modal-body">
+                    <div style="margin-bottom: 20px;">
+                        <h4 style="margin-bottom: 10px;">基本信息</h4>
+                        <div style="display: grid; grid-template-columns: 100px 1fr; row-gap: 12px;">
+                            <div>标签名称:</div>
+                            <div>配电线路</div>
+                            <div>标签类型:</div>
+                            <div><span class="tag tag-primary">知识点</span></div>
+                            <div>使用次数:</div>
+                            <div>489</div>
+                            <div>创建时间:</div>
+                            <div>2023-10-15</div>
+                            <div>标签描述:</div>
+                            <div>涉及配电线路相关知识的题目</div>
+                        </div>
+                    </div>
+                    
+                    <h4 style="margin-bottom: 10px;">使用趋势</h4>
+                    <div style="height: 200px; background-color: #f5f5f5; display: flex; justify-content: center; align-items: center; border-radius: 4px; margin-bottom: 20px;">
+                        图表区域 - 标签使用趋势
+                    </div>
+                    
+                    <h4 style="margin-bottom: 10px;">相关题目</h4>
+                    <div style="border: 1px solid var(--border-color); border-radius: 4px; max-height: 200px; overflow-y: auto;">
+                        <table class="table" style="margin-bottom: 0;">
+                            <thead>
+                                <tr>
+                                    <th>题目ID</th>
+                                    <th>题目标题</th>
+                                    <th>题目类型</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Q10045</td>
+                                    <td>10kV配电线路故障定位方法有哪些？</td>
+                                    <td>简答题</td>
+                                </tr>
+                                <tr>
+                                    <td>Q10089</td>
+                                    <td>配电线路分段保护的作用是什么？</td>
+                                    <td>单选题</td>
+                                </tr>
+                                <tr>
+                                    <td>Q10093</td>
+                                    <td>配电线路接地故障的处理流程</td>
+                                    <td>多选题</td>
+                                </tr>
+                                <tr>
+                                    <td>Q10121</td>
+                                    <td>如何检测配电线路的电压不平衡度？</td>
+                                    <td>单选题</td>
+                                </tr>
+                                <tr>
+                                    <td>Q10157</td>
+                                    <td>下列哪项不是配电线路的基本要求？</td>
+                                    <td>单选题</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    <button class="btn btn-primary">编辑标签</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 侧边栏切换
+        document.getElementById('toggle-sidebar').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.toggle('sidebar-collapsed');
+        });
+        
+        // 全选/取消全选
+        document.getElementById('select-all').addEventListener('change', function() {
+            const checked = this.checked;
+            document.querySelectorAll('.select-item').forEach(function(item) {
+                item.checked = checked;
+            });
+        });
+        
+        // 显示创建标签弹窗
+        document.getElementById('create-tag').addEventListener('click', function() {
+            document.getElementById('tag-modal').classList.add('show');
+        });
+        
+        // 查看标签详情
+        document.querySelectorAll('.btn-icon[title="查看"]').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                document.getElementById('tag-detail-modal').classList.add('show');
+            });
+        });
+        
+        // 编辑标签
+        document.querySelectorAll('.btn-icon[title="编辑"]').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                document.getElementById('tag-modal').classList.add('show');
+                document.querySelector('#tag-modal .modal-title').textContent = '编辑标签';
+            });
+        });
+        
+        // 关闭弹窗
+        document.querySelectorAll('.modal-close, .btn[data-dismiss="modal"]').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.modal').forEach(function(modal) {
+                    modal.classList.remove('show');
+                });
+            });
+        });
+        
+        // 当点击modal背景时关闭modal
+        document.querySelectorAll('.modal').forEach(function(modal) {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('show');
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>国网考试题库后台管理系统 - 激活码管理</title>
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+    <div class="layout">
+        <!-- 侧边栏 -->
+        <div class="sidebar">
+            <div class="system-logo">
+                <img src="https://via.placeholder.com/32x32?text=Logo" alt="Logo">
+                <span class="system-logo-text">国网考试题库</span>
+            </div>
+            <ul class="menu">
+                <li class="menu-item">
+                    <a href="dashboard.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-speedometer2"></i></span>
+                        <span class="menu-text">仪表盘</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="category-management.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-folder2"></i></span>
+                        <span class="menu-text">分类管理</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="question-management.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-file-earmark-text"></i></span>
+                        <span class="menu-text">题目管理</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="tag-management.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-tags"></i></span>
+                        <span class="menu-text">标签管理</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="activation-code.html" class="menu-link active">
+                        <span class="menu-icon"><i class="bi bi-key"></i></span>
+                        <span class="menu-text">激活码管理</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="user-management.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-people"></i></span>
+                        <span class="menu-text">用户管理</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="data-analysis.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-bar-chart"></i></span>
+                        <span class="menu-text">数据分析</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="system-settings.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-gear"></i></span>
+                        <span class="menu-text">系统设置</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 主内容区 -->
+        <div class="main-content">
+            <!-- 顶部导航栏 -->
+            <div class="navbar">
+                <div class="nav-left">
+                    <button class="btn btn-secondary" id="toggle-sidebar">
+                        <i class="bi bi-list"></i>
+                    </button>
+                    <div class="breadcrumb">
+                        <div class="breadcrumb-item"><a href="dashboard.html">首页</a></div>
+                        <div class="breadcrumb-item active">激活码管理</div>
+                    </div>
+                </div>
+                <div class="nav-right">
+                    <div class="search-box">
+                        <span class="search-icon"><i class="bi bi-search"></i></span>
+                        <input type="text" class="search-input" placeholder="搜索激活码...">
+                    </div>
+                    <div class="user-dropdown" style="margin-left: 20px;">
+                        <span><i class="bi bi-person-circle"></i> 管理员 <i class="bi bi-chevron-down"></i></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 内容区域 -->
+            <div class="content">
+                <div class="page-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                    <h1>激活码管理</h1>
+                    <div>
+                        <button class="btn btn-secondary" style="margin-right: 12px;">
+                            <i class="bi bi-download"></i> 导出激活码
+                        </button>
+                        <button class="btn btn-primary" id="generate-code">
+                            <i class="bi bi-plus"></i> 生成激活码
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 统计卡片 -->
+                <div class="dashboard-cards">
+                    <div class="stat-card">
+                        <div class="stat-card-title">总激活码数量</div>
+                        <div class="stat-card-value">1,286</div>
+                        <div class="stat-card-desc">
+                            <span><i class="bi bi-calendar"></i> 所有时间</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-title">已激活数量</div>
+                        <div class="stat-card-value">857</div>
+                        <div class="stat-card-desc">
+                            <span>激活率: 66.6%</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-title">未使用数量</div>
+                        <div class="stat-card-value">387</div>
+                        <div class="stat-card-desc">
+                            <span>占比: 30.1%</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-title">已过期数量</div>
+                        <div class="stat-card-value">42</div>
+                        <div class="stat-card-desc">
+                            <span>占比: 3.3%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 筛选器 -->
+                <div class="card" style="margin-bottom: 24px;">
+                    <div class="card-header">
+                        <div class="card-title">筛选条件</div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 16px;">
+                        <div class="form-item" style="margin-bottom: 8px;">
+                            <label for="filter-type">激活码类型</label>
+                            <select id="filter-type">
+                                <option value="">所有类型</option>
+                                <option value="standard" selected>标准版</option>
+                                <option value="premium">高级版</option>
+                                <option value="special">特殊版</option>
+                            </select>
+                        </div>
+                        <div class="form-item" style="margin-bottom: 8px;">
+                            <label for="filter-status">使用状态</label>
+                            <select id="filter-status">
+                                <option value="">所有状态</option>
+                                <option value="unused" selected>未使用</option>
+                                <option value="used">已使用</option>
+                                <option value="expired">已过期</option>
+                            </select>
+                        </div>
+                        <div class="form-item" style="margin-bottom: 8px;">
+                            <label for="filter-batch">批次号</label>
+                            <select id="filter-batch">
+                                <option value="">所有批次</option>
+                                <option value="1" selected>202404001</option>
+                                <option value="2">202403002</option>
+                                <option value="3">202403001</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 16px;">
+                        <div class="form-item" style="margin-bottom: 8px;">
+                            <label for="filter-bank">关联题库</label>
+                            <select id="filter-bank">
+                                <option value="">所有题库</option>
+                                <option value="1" selected>电力系统基础</option>
+                                <option value="2">配电技术</option>
+                                <option value="3">安全管理</option>
+                                <option value="4">电力自动化</option>
+                            </select>
+                        </div>
+                        <div class="form-item" style="margin-bottom: 8px;">
+                            <label for="filter-date-start">生成时间起</label>
+                            <input type="date" id="filter-date-start" value="2024-04-01">
+                        </div>
+                        <div class="form-item" style="margin-bottom: 8px;">
+                            <label for="filter-date-end">生成时间止</label>
+                            <input type="date" id="filter-date-end" value="2024-04-07">
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: flex-end;">
+                        <button class="btn btn-secondary" style="margin-right: 12px;">重置</button>
+                        <button class="btn btn-primary">应用筛选</button>
+                    </div>
+                </div>
+                
+                <!-- 激活码列表 -->
+                <div class="card">
+                    <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+                        <div class="card-title">激活码列表</div>
+                        <div>
+                            <span style="margin-right: 16px;">共 387 条记录</span>
+                            <button class="btn btn-secondary btn-sm" style="margin-right: 8px;">
+                                <i class="bi bi-arrow-repeat"></i> 刷新
+                            </button>
+                            <div class="dropdown" style="display: inline-block;">
+                                <button class="btn btn-secondary btn-sm">
+                                    批量操作 <i class="bi bi-chevron-down"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th style="width: 40px;">
+                                    <input type="checkbox" id="select-all">
+                                </th>
+                                <th style="width: 180px;">激活码</th>
+                                <th style="width: 100px;">类型</th>
+                                <th style="width: 100px;">状态</th>
+                                <th>关联题库</th>
+                                <th style="width: 80px;">有效期</th>
+                                <th style="width: 130px;">生成时间</th>
+                                <th style="width: 130px;">激活时间</th>
+                                <th style="width: 120px;">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- 激活码1 -->
+                            <tr>
+                                <td><input type="checkbox" class="select-item"></td>
+                                <td>ABCD-EFGH-IJKL-MNOP</td>
+                                <td><span class="tag tag-primary">标准版</span></td>
+                                <td><span class="tag tag-warning">未使用</span></td>
+                                <td>电力系统基础</td>
+                                <td>365天</td>
+                                <td>2024-04-07</td>
+                                <td>-</td>
+                                <td>
+                                    <button class="btn-icon" title="查看"><i class="bi bi-eye"></i></button>
+                                    <button class="btn-icon" title="编辑"><i class="bi bi-pencil"></i></button>
+                                    <button class="btn-icon" title="删除"><i class="bi bi-trash"></i></button>
+                                </td>
+                            </tr>
+                            
+                            <!-- 激活码2 -->
+                            <tr>
+                                <td><input type="checkbox" class="select-item"></td>
+                                <td>QRST-UVWX-YZAB-CDEF</td>
+                                <td><span class="tag tag-primary">标准版</span></td>
+                                <td><span class="tag tag-warning">未使用</span></td>
+                                <td>电力系统基础</td>
+                                <td>365天</td>
+                                <td>2024-04-07</td>
+                                <td>-</td>
+                                <td>
+                                    <button class="btn-icon" title="查看"><i class="bi bi-eye"></i></button>
+                                    <button class="btn-icon" title="编辑"><i class="bi bi-pencil"></i></button>
+                                    <button class="btn-icon" title="删除"><i class="bi bi-trash"></i></button>
+                                </td>
+                            </tr>
+                            
+                            <!-- 激活码3 -->
+                            <tr>
+                                <td><input type="checkbox" class="select-item"></td>
+                                <td>GHIJ-KLMN-OPQR-STUV</td>
+                                <td><span class="tag tag-info">高级版</span></td>
+                                <td><span class="tag tag-warning">未使用</span></td>
+                                <td>电力系统基础, 配电技术</td>
+                                <td>365天</td>
+                                <td>2024-04-07</td>
+                                <td>-</td>
+                                <td>
+                                    <button class="btn-icon" title="查看"><i class="bi bi-eye"></i></button>
+                                    <button class="btn-icon" title="编辑"><i class="bi bi-pencil"></i></button>
+                                    <button class="btn-icon" title="删除"><i class="bi bi-trash"></i></button>
+                                </td>
+                            </tr>
+                            
+                            <!-- 激活码4 -->
+                            <tr>
+                                <td><input type="checkbox" class="select-item"></td>
+                                <td>WXYZ-ABCD-EFGH-IJKL</td>
+                                <td><span class="tag tag-primary">标准版</span></td>
+                                <td><span class="tag tag-warning">未使用</span></td>
+                                <td>电力系统基础</td>
+                                <td>365天</td>
+                                <td>2024-04-07</td>
+                                <td>-</td>
+                                <td>
+                                    <button class="btn-icon" title="查看"><i class="bi bi-eye"></i></button>
+                                    <button class="btn-icon" title="编辑"><i class="bi bi-pencil"></i></button>
+                                    <button class="btn-icon" title="删除"><i class="bi bi-trash"></i></button>
+                                </td>
+                            </tr>
+                            
+                            <!-- 激活码5 -->
+                            <tr>
+                                <td><input type="checkbox" class="select-item"></td>
+                                <td>MNOP-QRST-UVWX-YZAB</td>
+                                <td><span class="tag tag-warning">特殊版</span></td>
+                                <td><span class="tag tag-warning">未使用</span></td>
+                                <td>全部题库</td>
+                                <td>180天</td>
+                                <td>2024-04-07</td>
+                                <td>-</td>
+                                <td>
+                                    <button class="btn-icon" title="查看"><i class="bi bi-eye"></i></button>
+                                    <button class="btn-icon" title="编辑"><i class="bi bi-pencil"></i></button>
+                                    <button class="btn-icon" title="删除"><i class="bi bi-trash"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <!-- 分页 -->
+                    <div style="display: flex; justify-content: space-between; padding: 16px;">
+                        <div>
+                            <label style="margin-right: 8px;">每页显示:</label>
+                            <select style="width: 80px;">
+                                <option>10</option>
+                                <option selected>20</option>
+                                <option>50</option>
+                                <option>100</option>
+                            </select>
+                        </div>
+                        <div class="pagination">
+                            <button class="btn-page" disabled><i class="bi bi-chevron-double-left"></i></button>
+                            <button class="btn-page" disabled><i class="bi bi-chevron-left"></i></button>
+                            <button class="btn-page active">1</button>
+                            <button class="btn-page">2</button>
+                            <button class="btn-page">3</button>
+                            <span>...</span>
+                            <button class="btn-page">20</button>
+                            <button class="btn-page"><i class="bi bi-chevron-right"></i></button>
+                            <button class="btn-page"><i class="bi bi-chevron-double-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 页脚 -->
+            <div class="footer">
+                国网考试题库后台管理系统 &copy; 2024 国家电网有限公司
+            </div>
+        </div>
+    </div>
+    
+    <!-- 生成激活码弹窗 -->
+    <div class="modal" id="generate-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">批量生成激活码</h3>
+                    <button class="modal-close"><i class="bi bi-x-lg"></i></button>
+                </div>
+                <div class="modal-body">
+                    <form id="generate-form">
+                        <div class="form-item">
+                            <label for="code-type">激活码类型</label>
+                            <select id="code-type" name="type">
+                                <option value="standard" selected>标准版</option>
+                                <option value="premium">高级版</option>
+                                <option value="special">特殊版</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-item">
+                            <label for="code-count">生成数量</label>
+                            <input type="number" id="code-count" name="count" value="50" min="1" max="1000">
+                        </div>
+                        
+                        <div class="form-item">
+                            <label for="code-valid-days">有效期（天）</label>
+                            <input type="number" id="code-valid-days" name="validDays" value="365" min="1">
+                        </div>
+                        
+                        <div class="form-item">
+                            <label>关联题库</label>
+                            <div style="margin-bottom: 8px;">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="banks[]" value="1" checked>
+                                    <span>电力系统基础</span>
+                                </label>
+                            </div>
+                            <div style="margin-bottom: 8px;">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="banks[]" value="2">
+                                    <span>配电技术</span>
+                                </label>
+                            </div>
+                            <div style="margin-bottom: 8px;">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="banks[]" value="3">
+                                    <span>安全管理</span>
+                                </label>
+                            </div>
+                            <div>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="banks[]" value="4">
+                                    <span>电力自动化</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-item">
+                            <label>附加功能</label>
+                            <div style="margin-bottom: 8px;">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="features[]" value="simulation" checked>
+                                    <span>模拟考试</span>
+                                </label>
+                            </div>
+                            <div>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="features[]" value="recommendation">
+                                    <span>智能推荐</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-item">
+                            <label for="code-prefix">批次前缀（可选）</label>
+                            <input type="text" id="code-prefix" name="prefix" placeholder="例如：SGC-">
+                        </div>
+                        
+                        <div class="form-item">
+                            <label for="code-note">备注（可选）</label>
+                            <textarea id="code-note" name="note" rows="2" placeholder="输入批次备注信息"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button class="btn btn-primary">生成</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 侧边栏切换
+        document.getElementById('toggle-sidebar').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.toggle('sidebar-collapsed');
+        });
+        
+        // 全选/取消全选
+        document.getElementById('select-all').addEventListener('change', function() {
+            const checked = this.checked;
+            document.querySelectorAll('.select-item').forEach(function(item) {
+                item.checked = checked;
+            });
+        });
+        
+        // 显示生成激活码弹窗
+        document.getElementById('generate-code').addEventListener('click', function() {
+            document.getElementById('generate-modal').classList.add('show');
+        });
+        
+        // 关闭弹窗
+        document.querySelector('.modal-close').addEventListener('click', function() {
+            document.getElementById('generate-modal').classList.remove('show');
+        });
+        
+        document.querySelector('[data-dismiss="modal"]').addEventListener('click', function() {
+            document.getElementById('generate-modal').classList.remove('show');
+        });
+        
+        // 当点击modal背景时关闭modal
+        document.getElementById('generate-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html> 

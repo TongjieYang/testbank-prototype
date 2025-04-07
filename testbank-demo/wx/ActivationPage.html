@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>国网考试题库微信小程序 - 题库激活</title>
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入动效样式 -->
+    <link rel="stylesheet" href="./animation.css">
+    <link rel="stylesheet" href="./nav.css">
+    <style>
+        /* 微信小程序风格的自定义样式 */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .mp-icon {
+            display: inline-block;
+            width: 1.5rem;
+            height: 1.5rem;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+        .icon-back { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" /></svg>'); }
+        .icon-key { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 0 1 3 3m3 0a6 6 0 0 1-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1 1 21.75 8.25Z" /></svg>'); }
+        .icon-info { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" /></svg>'); }
+        .icon-check { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>'); }
+        .icon-lock { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" /></svg>'); }
+        .icon-unlock { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5V6.75a4.5 4.5 0 1 1 9 0v3.75M3.75 21.75h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H3.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" /></svg>'); }
+        .icon-book { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" /></svg>'); }
+        .icon-calendar { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" /></svg>'); }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div class="max-w-md mx-auto bg-white min-h-screen">
+        <!-- 顶部导航栏 -->
+        <div class="flex items-center px-4 py-3 bg-blue-600 text-white">
+            <a href="javascript:history.back()" class="icon-back mp-icon w-6 h-6 text-white"></a>
+            <div class="font-bold text-lg mx-auto">题库激活</div>
+            <div class="w-6"></div>
+        </div>
+        
+        <!-- 激活状态卡片 -->
+        <div class="m-4 bg-gradient-to-r from-blue-600 to-blue-800 rounded-lg text-white p-5 shadow-lg card-hover fade-in">
+            <div class="flex items-center justify-between">
+                <div class="text-lg font-bold">题库激活状态</div>
+                <div class="icon-key mp-icon w-7 h-7 text-white opacity-80"></div>
+            </div>
+            <div class="mt-4 flex items-center">
+                <div class="icon-check mp-icon w-6 h-6 bg-white rounded-full p-1 text-blue-600 activation-success"></div>
+                <div class="ml-2">
+                    <div class="text-sm font-medium">已激活题库</div>
+                    <div class="text-xs text-blue-100 mt-0.5">国网配电技术基础题库(2023版)</div>
+                </div>
+            </div>
+            <div class="mt-4 text-sm">
+                <div class="flex justify-between items-center">
+                    <div class="text-blue-100">激活时间</div>
+                    <div class="list-item-slide">2023-06-15</div>
+                </div>
+                <div class="flex justify-between items-center mt-1">
+                    <div class="text-blue-100">有效期至</div>
+                    <div class="list-item-slide">2024-06-15</div>
+                </div>
+                <div class="flex justify-between items-center mt-1">
+                    <div class="text-blue-100">题库数量</div>
+                    <div class="list-item-slide">3200题</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 激活新题库表单 -->
+        <div class="px-4 pt-3 pb-6">
+            <div class="text-lg font-bold text-gray-800">激活新题库</div>
+            <div class="text-sm text-gray-500 mt-1">请输入您的激活码以解锁更多题库资源</div>
+            
+            <div class="mt-4">
+                <div class="text-sm font-medium text-gray-700 mb-2">激活码</div>
+                <div class="relative list-item-slide">
+                    <input type="text" 
+                           placeholder="请输入16位激活码" 
+                           class="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                           maxlength="16"
+                           pattern="[A-Z0-9]{16}"
+                    />
+                    <div class="absolute right-3 top-1/2 transform -translate-y-1/2">
+                        <div class="icon-key mp-icon w-5 h-5 text-gray-400"></div>
+                    </div>
+                </div>
+                <div class="text-xs text-gray-500 mt-1">
+                    激活码格式：16位字母和数字组合，字母为大写
+                </div>
+            </div>
+            
+            <button class="w-full bg-blue-600 text-white font-medium rounded-lg py-3 mt-6 btn-pulse">
+                立即激活
+            </button>
+            
+            <div class="flex items-center justify-center mt-4">
+                <div class="icon-info mp-icon w-4 h-4 text-gray-500"></div>
+                <div class="text-xs text-gray-500 ml-1">
+                    如何获得激活码？
+                </div>
+            </div>
+        </div>
+        
+        <!-- 其他题库列表 -->
+        <div class="px-4 py-3 border-t border-gray-200">
+            <div class="text-lg font-bold text-gray-800">更多题库</div>
+            <div class="text-sm text-gray-500 mt-1">我们为您精选了以下题库</div>
+            
+            <!-- 题库项1 - 已激活 -->
+            <a href="./ExercisePage.html" class="flex items-center justify-between p-4 border-b border-gray-100 card-hover list-item-slide">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center">
+                        <div class="icon-book mp-icon w-6 h-6 text-blue-600"></div>
+                    </div>
+                    <div class="ml-3">
+                        <div class="font-medium">配电技术基础</div>
+                        <div class="text-xs text-gray-500 mt-0.5">2024年版 | 3200题</div>
+                    </div>
+                </div>
+                <div class="text-xs bg-green-100 text-green-600 px-2 py-0.5 rounded">已激活</div>
+            </a>
+            
+            <!-- 题库项2 - 未激活 -->
+            <a href="./QuestionBankPage.html" class="flex items-center justify-between p-4 card-hover list-item-slide">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center">
+                        <div class="icon-book mp-icon w-6 h-6 text-purple-600"></div>
+                    </div>
+                    <div class="ml-3">
+                        <div class="font-medium">电力系统继电保护</div>
+                        <div class="text-xs text-gray-500 mt-0.5">2023年版 | 2500题</div>
+                    </div>
+                </div>
+                <div class="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded">未激活</div>
+            </a>
+            
+            <!-- 题库项3 - 未激活 -->
+            <div class="mt-3 border border-gray-200 rounded-lg p-4 card-hover list-item-slide">
+                <div class="flex justify-between items-start">
+                    <div class="flex">
+                        <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
+                            <div class="icon-book mp-icon w-6 h-6 text-gray-500"></div>
+                        </div>
+                        <div class="ml-3">
+                            <div class="text-base font-medium text-gray-800">国网继电保护题库</div>
+                            <div class="text-xs text-gray-500 mt-0.5">
+                                <span class="inline-flex items-center">
+                                    <div class="icon-calendar mp-icon w-3 h-3 mr-0.5 text-gray-500"></div>
+                                    2023年版
+                                </span>
+                                <span class="ml-2">2800题</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center text-gray-500 text-xs font-medium">
+                        <div class="icon-lock mp-icon w-4 h-4 mr-1"></div>
+                        未激活
+                    </div>
+                </div>
+                <div class="mt-2 text-xs text-gray-600 border-t border-gray-100 pt-2">
+                    包含继电保护原理、设备应用、整定计算、故障分析、定值校验等专业内容。
+                </div>
+                <div class="mt-2 flex justify-end">
+                    <button class="w-full bg-blue-600 text-white py-3 rounded-lg font-medium btn-pulse" onclick="location.href='./QuestionBankPage.html'">
+                        激活题库
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 激活帮助 -->
+        <div class="px-4 py-5 border-t border-gray-200 mb-10">
+            <div class="text-lg font-bold text-gray-800">激活帮助</div>
+            
+            <div class="mt-3">
+                <div class="text-sm font-medium text-gray-700 mb-1">1. 如何获取激活码？</div>
+                <div class="text-xs text-gray-600 leading-relaxed list-item-slide">
+                    您可以通过单位内训系统申请、培训课程附赠或国网学习平台购买获得题库激活码。
+                </div>
+            </div>
+            
+            <div class="mt-3">
+                <div class="text-sm font-medium text-gray-700 mb-1">2. 激活码使用规则</div>
+                <div class="text-xs text-gray-600 leading-relaxed list-item-slide">
+                    • 每个激活码仅能使用一次，且与您的账号绑定<br>
+                    • 激活码有效期通常为1年<br>
+                    • 激活后无法退换或转让给其他账号<br>
+                    • 请注意区分大小写，且不含空格
+                </div>
+            </div>
+            
+            <div class="mt-3">
+                <div class="text-sm font-medium text-gray-700 mb-1">3. 激活遇到问题？</div>
+                <div class="text-xs text-gray-600 leading-relaxed list-item-slide">
+                    如果您在激活过程中遇到任何问题，请联系客服：<br>
+                    电话：400-888-8888<br>
+                    工作时间：周一至周五 9:00-18:00
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<!-- 引入动效脚本 -->
+<script src="./transition.js"></script>
+<!-- 激活页面特殊动效 -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 激活码输入特效
+        const activationInput = document.querySelector('input[placeholder="请输入16位激活码"]');
+        if (activationInput) {
+            // 添加输入格式化 (每4位添加一个空格)
+            activationInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/[^A-Z0-9]/g, '');
+                let formattedValue = '';
+                
+                for (let i = 0; i < value.length; i++) {
+                    if (i > 0 && i % 4 === 0) {
+                        formattedValue += ' ';
+                    }
+                    formattedValue += value[i];
+                }
+                
+                e.target.value = formattedValue;
+            });
+            
+            // 聚焦效果
+            activationInput.addEventListener('focus', function() {
+                this.parentElement.classList.add('scale-105');
+                this.parentElement.style.transition = 'transform 0.2s ease';
+            });
+            
+            activationInput.addEventListener('blur', function() {
+                this.parentElement.classList.remove('scale-105');
+            });
+        }
+        
+        // 激活按钮点击效果
+        const activateButton = document.querySelector('button.btn-pulse');
+        if (activateButton) {
+            activateButton.addEventListener('click', function() {
+                // 获取激活码
+                const code = activationInput ? activationInput.value.replace(/\s/g, '') : '';
+                
+                // 简单验证
+                if (code.length !== 16) {
+                    showToast('请输入16位激活码');
+                    return;
+                }
+                
+                // 显示加载状态
+                this.innerHTML = '<span class="inline-flex items-center"><svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>激活中...</span>';
+                this.disabled = true;
+                
+                // 模拟激活过程
+                setTimeout(() => {
+                    // 显示成功或失败
+                    if (Math.random() > 0.3) { // 70%成功率
+                        showSuccessToast('激活成功！');
+                        // 刷新页面或添加新的已激活题库
+                        setTimeout(() => {
+                            location.reload();
+                        }, 1500);
+                    } else {
+                        showErrorToast('激活码无效或已被使用');
+                        this.innerHTML = '立即激活';
+                        this.disabled = false;
+                    }
+                }, 2000);
+            });
+        }
+        
+        // Toast提示
+        function showToast(message) {
+            createToast(message, 'bg-gray-800');
+        }
+        
+        function showSuccessToast(message) {
+            createToast(message, 'bg-green-600');
+        }
+        
+        function showErrorToast(message) {
+            createToast(message, 'bg-red-600');
+        }
+        
+        function createToast(message, bgClass) {
+            const toast = document.createElement('div');
+            toast.className = `fixed top-16 left-1/2 transform -translate-x-1/2 px-4 py-2 rounded-full text-white text-sm ${bgClass} z-50`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            // 添加动画
+            toast.style.opacity = '0';
+            toast.style.transform = 'translate(-50%, -20px)';
+            toast.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+            
+            setTimeout(() => {
+                toast.style.opacity = '1';
+                toast.style.transform = 'translate(-50%, 0)';
+            }, 10);
+            
+            // 自动消失
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translate(-50%, -20px)';
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 3000);
+        }
+    });
+</script>
+</html> 

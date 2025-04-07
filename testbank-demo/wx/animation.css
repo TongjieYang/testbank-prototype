@@ -1,0 +1,218 @@
+/* 页面过渡动画 */
+.page-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.page-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.page-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page-exit-active {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* 按钮交互效果 */
+.btn-pulse {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-pulse::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.5);
+  opacity: 0;
+  border-radius: 100%;
+  transform: scale(1, 1) translate(-50%, -50%);
+  transform-origin: 50% 50%;
+}
+
+.btn-pulse:active::after {
+  animation: ripple 0.6s ease-out;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0, 0) translate(-50%, -50%);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(30, 30) translate(-50%, -50%);
+    opacity: 0;
+  }
+}
+
+/* 卡片悬浮效果 */
+.card-hover {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* 标签点击波纹效果 */
+.tag-ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.tag-ripple::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  border-radius: 100%;
+  transform: scale(1, 1) translate(-50%, -50%);
+  transform-origin: 50% 50%;
+}
+
+.tag-ripple:active::after {
+  animation: tag-ripple 0.4s ease-out;
+}
+
+@keyframes tag-ripple {
+  0% {
+    transform: scale(0, 0) translate(-50%, -50%);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(20, 20) translate(-50%, -50%);
+    opacity: 0;
+  }
+}
+
+/* 列表项滑入效果 */
+.list-item-slide {
+  opacity: 0;
+  transform: translateX(20px);
+  animation: slide-in 0.3s ease forwards;
+}
+
+@keyframes slide-in {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* 为列表项添加不同的延迟 */
+.list-item-slide:nth-child(1) { animation-delay: 0.05s; }
+.list-item-slide:nth-child(2) { animation-delay: 0.1s; }
+.list-item-slide:nth-child(3) { animation-delay: 0.15s; }
+.list-item-slide:nth-child(4) { animation-delay: 0.2s; }
+.list-item-slide:nth-child(5) { animation-delay: 0.25s; }
+.list-item-slide:nth-child(6) { animation-delay: 0.3s; }
+.list-item-slide:nth-child(7) { animation-delay: 0.35s; }
+.list-item-slide:nth-child(8) { animation-delay: 0.4s; }
+.list-item-slide:nth-child(9) { animation-delay: 0.45s; }
+.list-item-slide:nth-child(10) { animation-delay: 0.5s; }
+
+/* 页面内容渐入效果 */
+.fade-in {
+  animation: fade-in 0.5s ease-out;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* 激活成功动画 */
+.activation-success {
+  animation: success-pulse 0.5s ease-out;
+}
+
+@keyframes success-pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* 进度条动画 */
+.progress-animate {
+  transition: width 0.8s ease-in-out;
+}
+
+/* 添加和删除动画 */
+.item-add {
+  animation: item-add-animation 0.3s ease-out;
+}
+
+@keyframes item-add-animation {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.item-remove {
+  animation: item-remove-animation 0.3s ease-out;
+}
+
+@keyframes item-remove-animation {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+/* 页面切换动画辅助类 */
+.page-transition-wrapper {
+  position: relative;
+  min-height: 100vh;
+}
+
+/* 通知徽章动画 */
+.badge-pulse {
+  animation: badge-pulse 2s infinite;
+}
+
+@keyframes badge-pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+} 

@@ -1,0 +1,215 @@
+/* 底部导航栏样式 */
+.bottom-nav {
+    position: fixed !important; /* 强制固定 */
+    bottom: 0 !important;
+    left: 0;
+    right: 0;
+    max-width: 640px; /* 适应大部分中小屏幕手机 */
+    margin: 0 auto;
+    background-color: white;
+    box-shadow: 0 -1px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 8px 0;
+    z-index: 9999 !important; /* 确保在最上层 */
+    border-top: 1px solid #e5e7eb;
+    width: 100%;
+    height: 60px;
+    backface-visibility: hidden; /* 防止Safari中的渲染问题 */
+    -webkit-backface-visibility: hidden;
+    transform: translateZ(0); /* 启用硬件加速 */
+    -webkit-transform: translateZ(0);
+    will-change: transform; /* 性能优化 */
+    /* 防止iOS设备上的定位问题 */
+    -webkit-overflow-scrolling: touch;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.bottom-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.3s ease;
+    position: relative;
+    flex: 1;
+    height: 100%;
+    justify-content: center;
+}
+
+.bottom-nav-item:active {
+    transform: scale(0.92);
+}
+
+.bottom-nav-active .mp-icon {
+    color: #2563eb !important;
+}
+
+.bottom-nav-active .text-xs {
+    color: #2563eb !important;
+}
+
+/* 内容区域底部留白，防止被底部导航栏遮挡 */
+.page-container {
+    padding-bottom: 80px !important;
+    min-height: calc(100vh - 80px);
+    position: relative;
+    overflow-x: hidden;
+    width: 100%;
+    margin-bottom: var(--safe-area-inset-bottom, 0);
+}
+
+/* 小屏幕设备响应式调整 */
+@media (max-height: 600px) {
+    .bottom-nav {
+        padding: 5px 0;
+    }
+}
+
+/* 动画效果 */
+.bottom-nav-item:hover .mp-icon {
+    animation: nav-pulse 0.5s ease;
+}
+
+@keyframes nav-pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* 底部导航栏图标弹跳效果 */
+.bottom-nav-active .mp-icon {
+    animation: icon-bounce 0.6s ease;
+}
+
+@keyframes icon-bounce {
+    0%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-6px); }
+    60% { transform: translateY(-3px); }
+    80% { transform: translateY(-1px); }
+}
+
+/* 导航项震动效果 - 修改为更柔和的震动 */
+@keyframes navShake {
+    0% { transform: translateX(0); }
+    10% { transform: translateX(-2px) rotate(-0.5deg); }
+    20% { transform: translateX(2px) rotate(0.5deg); }
+    30% { transform: translateX(-1.5px) rotate(-0.3deg); }
+    40% { transform: translateX(1.5px) rotate(0.3deg); }
+    50% { transform: translateX(-1px) rotate(-0.2deg); }
+    60% { transform: translateX(1px) rotate(0.2deg); }
+    70% { transform: translateX(-0.5px) rotate(-0.1deg); }
+    80% { transform: translateX(0.5px) rotate(0.1deg); }
+    90% { transform: translateX(-0.25px); }
+    100% { transform: translateX(0); }
+}
+
+.nav-shake-animation {
+    animation: navShake 0.4s ease-in-out;
+}
+
+/* 波纹动画效果 */
+@keyframes navRipple {
+    to {
+        transform: scale(15);
+        opacity: 0;
+    }
+}
+
+.nav-ripple {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(37, 99, 235, 0.2);
+    transform: scale(0);
+    animation: navRipple 0.6s ease-out;
+}
+
+/* 确保所有页面的底部导航栏都能相对于底部固定 */
+html, body {
+    height: auto; /* 改为auto，而不是100% */
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    /* 移除position: relative */
+    overscroll-behavior-y: none;
+}
+
+/* 页面切换动画 */
+.page-slide {
+    transition: transform 0.3s ease-out;
+}
+
+.slide-left {
+    transform: translateX(-100%);
+}
+
+.slide-right {
+    transform: translateX(100%);
+}
+
+.slide-current {
+    transform: translateX(0);
+}
+
+/* 重置底部导航栏下划线样式，防止与nav.js冲突 */
+.bottom-nav-active::after {
+    display: none;
+}
+
+/* 底部导航栏动效 */
+.bottom-nav-item {
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.bottom-nav-item::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 50%;
+  width: 0;
+  height: 3px;
+  background-color: #2563eb;
+  transform: translateX(-50%);
+  transition: width 0.2s ease;
+  border-radius: 3px 3px 0 0;
+}
+
+.bottom-nav-item:hover {
+  transform: translateY(-2px);
+}
+
+.bottom-nav-item:active {
+  transform: translateY(0);
+}
+
+/* 导航项标题的颜色过渡 */
+.bottom-nav-item div:last-child {
+  transition: color 0.2s ease;
+}
+
+/* 导航项图标的颜色过渡 */
+.bottom-nav-item .mp-icon {
+  transition: color 0.2s ease;
+}
+
+/* 为不同页面设置导航焦点颜色 */
+.page-home .nav-home,
+.page-bank .nav-bank,
+.page-wrong .nav-wrong,
+.page-personal .nav-personal {
+  color: #2563eb;
+}
+
+/* 修复iOS Safe Area的问题 */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .bottom-nav {
+    padding-bottom: env(safe-area-inset-bottom);
+    height: calc(60px + env(safe-area-inset-bottom));
+  }
+  
+  .page-container {
+    padding-bottom: calc(80px + env(safe-area-inset-bottom));
+  }
+} 

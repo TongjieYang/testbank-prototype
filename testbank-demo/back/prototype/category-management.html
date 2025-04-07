@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>国网考试题库后台管理系统 - 分类管理</title>
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+    <div class="layout">
+        <!-- 侧边栏 -->
+        <div class="sidebar">
+            <div class="system-logo">
+                <img src="https://via.placeholder.com/32x32?text=Logo" alt="Logo">
+                <span class="system-logo-text">国网考试题库</span>
+            </div>
+            <ul class="menu">
+                <li class="menu-item">
+                    <a href="dashboard.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-speedometer2"></i></span>
+                        <span class="menu-text">仪表盘</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="category-management.html" class="menu-link active">
+                        <span class="menu-icon"><i class="bi bi-folder2"></i></span>
+                        <span class="menu-text">分类管理</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="question-management.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-file-earmark-text"></i></span>
+                        <span class="menu-text">题目管理</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="tag-management.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-tags"></i></span>
+                        <span class="menu-text">标签管理</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="activation-code.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-key"></i></span>
+                        <span class="menu-text">激活码管理</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="user-management.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-people"></i></span>
+                        <span class="menu-text">用户管理</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="data-analysis.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-bar-chart"></i></span>
+                        <span class="menu-text">数据分析</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="system-settings.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-gear"></i></span>
+                        <span class="menu-text">系统设置</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 主内容区 -->
+        <div class="main-content">
+            <!-- 顶部导航栏 -->
+            <div class="navbar">
+                <div class="nav-left">
+                    <button class="btn btn-secondary" id="toggle-sidebar">
+                        <i class="bi bi-list"></i>
+                    </button>
+                    <div class="breadcrumb">
+                        <div class="breadcrumb-item"><a href="dashboard.html">首页</a></div>
+                        <div class="breadcrumb-item active">分类管理</div>
+                    </div>
+                </div>
+                <div class="nav-right">
+                    <div class="search-box">
+                        <span class="search-icon"><i class="bi bi-search"></i></span>
+                        <input type="text" class="search-input" placeholder="搜索分类...">
+                    </div>
+                    <div class="user-dropdown" style="margin-left: 20px;">
+                        <span><i class="bi bi-person-circle"></i> 管理员 <i class="bi bi-chevron-down"></i></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 内容区域 -->
+            <div class="content">
+                <div class="page-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                    <h1>分类管理</h1>
+                    <button class="btn btn-primary" id="add-root-category">
+                        <i class="bi bi-plus"></i> 添加类别
+                    </button>
+                </div>
+                
+                <div style="display: flex; gap: 24px;">
+                    <!-- 左侧分类树 -->
+                    <div style="width: 360px; background: white; border-radius: 8px; box-shadow: var(--shadow-light); padding: 16px;">
+                        <div style="margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;">
+                            <h3 style="margin: 0;">分类树</h3>
+                            <div>
+                                <button class="btn btn-secondary btn-sm" title="展开全部">
+                                    <i class="bi bi-arrows-expand"></i>
+                                </button>
+                                <button class="btn btn-secondary btn-sm" title="折叠全部">
+                                    <i class="bi bi-arrows-collapse"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- 树形结构 -->
+                        <div class="category-tree">
+                            <!-- 电力系统基础 -->
+                            <div class="tree-item">
+                                <div class="tree-item-header">
+                                    <span class="tree-toggle"><i class="bi bi-chevron-down"></i></span>
+                                    <span class="tree-icon"><i class="bi bi-folder2-open"></i></span>
+                                    <span class="tree-label">电力系统基础</span>
+                                    <div class="tree-actions">
+                                        <button class="btn-icon" title="添加子分类"><i class="bi bi-plus-circle"></i></button>
+                                        <button class="btn-icon" title="编辑"><i class="bi bi-pencil"></i></button>
+                                        <button class="btn-icon" title="删除"><i class="bi bi-trash"></i></button>
+                                    </div>
+                                </div>
+                                <div class="tree-children">
+                                    <!-- 输电线路 -->
+                                    <div class="tree-item">
+                                        <div class="tree-item-header">
+                                            <span class="tree-toggle"><i class="bi bi-chevron-down"></i></span>
+                                            <span class="tree-icon"><i class="bi bi-folder2-open"></i></span>
+                                            <span class="tree-label">输电线路</span>
+                                            <div class="tree-actions">
+                                                <button class="btn-icon" title="添加子分类"><i class="bi bi-plus-circle"></i></button>
+                                                <button class="btn-icon" title="编辑"><i class="bi bi-pencil"></i></button>
+                                                <button class="btn-icon" title="删除"><i class="bi bi-trash"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="tree-children">
+                                            <!-- 架空线路 -->
+                                            <div class="tree-item">
+                                                <div class="tree-item-header">
+                                                    <span class="tree-toggle"><i class="bi bi-chevron-down"></i></span>
+                                                    <span class="tree-icon"><i class="bi bi-folder2-open"></i></span>
+                                                    <span class="tree-label">架空线路</span>
+                                                    <div class="tree-actions">
+                                                        <button class="btn-icon" title="添加子分类"><i class="bi bi-plus-circle"></i></button>
+                                                        <button class="btn-icon" title="编辑"><i class="bi bi-pencil"></i></button>
+                                                        <button class="btn-icon" title="删除"><i class="bi bi-trash"></i></button>
+                                                    </div>
+                                                </div>
+                                                <div class="tree-children">
+                                                    <div class="tree-item">
+                                                        <div class="tree-item-header">
+                                                            <span class="tree-toggle" style="visibility: hidden;"><i class="bi bi-chevron-right"></i></span>
+                                                            <span class="tree-icon"><i class="bi bi-file-earmark-text"></i></span>
+                                                            <span class="tree-label">导线选型</span>
+                                                            <div class="tree-actions">
+                                                                <button class="btn-icon" title="编辑"><i class="bi bi-pencil"></i></button>
+                                                                <button class="btn-icon" title="删除"><i class="bi bi-trash"></i></button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tree-item">
+                                                        <div class="tree-item-header">
+                                                            <span class="tree-toggle" style="visibility: hidden;"><i class="bi bi-chevron-right"></i></span>
+                                                            <span class="tree-icon"><i class="bi bi-file-earmark-text"></i></span>
+                                                            <span class="tree-label">杆塔结构</span>
+                                                            <div class="tree-actions">
+                                                                <button class="btn-icon" title="编辑"><i class="bi bi-pencil"></i></button>
+                                                                <button class="btn-icon" title="删除"><i class="bi bi-trash"></i></button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tree-item">
+                                                        <div class="tree-item-header">
+                                                            <span class="tree-toggle" style="visibility: hidden;"><i class="bi bi-chevron-right"></i></span>
+                                                            <span class="tree-icon"><i class="bi bi-file-earmark-text"></i></span>
+                                                            <span class="tree-label">绝缘子</span>
+                                                            <div class="tree-actions">
+                                                                <button class="btn-icon" title="编辑"><i class="bi bi-pencil"></i></button>
+                                                                <button class="btn-icon" title="删除"><i class="bi bi-trash"></i></button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- 电缆线路 -->
+                                            <div class="tree-item">
+                                                <div class="tree-item-header">
+                                                    <span class="tree-toggle"><i class="bi bi-chevron-right"></i></span>
+                                                    <span class="tree-icon"><i class="bi bi-folder2"></i></span>
+                                                    <span class="tree-label">电缆线路</span>
+                                                    <div class="tree-actions">
+                                                        <button class="btn-icon" title="添加子分类"><i class="bi bi-plus-circle"></i></button>
+                                                        <button class="btn-icon" title="编辑"><i class="bi bi-pencil"></i></button>
+                                                        <button class="btn-icon" title="删除"><i class="bi bi-trash"></i></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 配电技术 -->
+                            <div class="tree-item">
+                                <div class="tree-item-header">
+                                    <span class="tree-toggle"><i class="bi bi-chevron-right"></i></span>
+                                    <span class="tree-icon"><i class="bi bi-folder2"></i></span>
+                                    <span class="tree-label">配电技术</span>
+                                    <div class="tree-actions">
+                                        <button class="btn-icon" title="添加子分类"><i class="bi bi-plus-circle"></i></button>
+                                        <button class="btn-icon" title="编辑"><i class="bi bi-pencil"></i></button>
+                                        <button class="btn-icon" title="删除"><i class="bi bi-trash"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 安全管理 -->
+                            <div class="tree-item">
+                                <div class="tree-item-header">
+                                    <span class="tree-toggle"><i class="bi bi-chevron-right"></i></span>
+                                    <span class="tree-icon"><i class="bi bi-folder2"></i></span>
+                                    <span class="tree-label">安全管理</span>
+                                    <div class="tree-actions">
+                                        <button class="btn-icon" title="添加子分类"><i class="bi bi-plus-circle"></i></button>
+                                        <button class="btn-icon" title="编辑"><i class="bi bi-pencil"></i></button>
+                                        <button class="btn-icon" title="删除"><i class="bi bi-trash"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 电力自动化 -->
+                            <div class="tree-item">
+                                <div class="tree-item-header">
+                                    <span class="tree-toggle"><i class="bi bi-chevron-right"></i></span>
+                                    <span class="tree-icon"><i class="bi bi-folder2"></i></span>
+                                    <span class="tree-label">电力自动化</span>
+                                    <div class="tree-actions">
+                                        <button class="btn-icon" title="添加子分类"><i class="bi bi-plus-circle"></i></button>
+                                        <button class="btn-icon" title="编辑"><i class="bi bi-pencil"></i></button>
+                                        <button class="btn-icon" title="删除"><i class="bi bi-trash"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 右侧详情 -->
+                    <div style="flex: 1; background: white; border-radius: 8px; box-shadow: var(--shadow-light); padding: 24px;">
+                        <div class="card-header">
+                            <div class="card-title">分类详情</div>
+                        </div>
+                        
+                        <form id="category-form">
+                            <div class="form-item">
+                                <label for="category-name">分类名称</label>
+                                <input type="text" id="category-name" name="name" value="架空线路" placeholder="请输入分类名称">
+                            </div>
+                            
+                            <div class="form-item">
+                                <label for="category-level">分类级别</label>
+                                <select id="category-level" name="level">
+                                    <option value="1">一级分类（类别）</option>
+                                    <option value="2">二级分类（科目）</option>
+                                    <option value="3" selected>三级分类（章节）</option>
+                                    <option value="4">四级分类（知识点）</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-item">
+                                <label for="category-parent">上级分类</label>
+                                <select id="category-parent" name="parentId">
+                                    <option value="">无（作为顶级分类）</option>
+                                    <option value="1">电力系统基础</option>
+                                    <option value="2" selected>输电线路</option>
+                                    <option value="3">配电技术</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-item">
+                                <label for="category-desc">分类描述</label>
+                                <textarea id="category-desc" name="description" rows="3" placeholder="请输入分类描述">架空线路是悬挂于杆塔或支持结构上空的输电线路，是电力系统中最常见的输电方式。</textarea>
+                            </div>
+                            
+                            <div class="form-item">
+                                <label for="category-order">排序序号</label>
+                                <input type="number" id="category-order" name="order" value="1" placeholder="请输入排序序号">
+                            </div>
+                            
+                            <div class="form-item">
+                                <label>关联标签</label>
+                                <div class="tag-selector" style="border: 1px solid var(--border-color); padding: 8px; border-radius: 4px;">
+                                    <span class="tag tag-primary">输电系统 <i class="bi bi-x"></i></span>
+                                    <span class="tag tag-primary">架空线路 <i class="bi bi-x"></i></span>
+                                    <span class="tag tag-primary">电力工程 <i class="bi bi-x"></i></span>
+                                    <span style="display: inline-block; margin-left: 8px;">
+                                        <button class="btn btn-secondary btn-sm">
+                                            <i class="bi bi-plus"></i> 添加标签
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <div class="form-options" style="margin-top: 16px;">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="is-hot" name="isHot" checked>
+                                    <span>设为热门分类</span>
+                                </label>
+                            </div>
+                            
+                            <div style="margin-top: 24px;">
+                                <button type="button" class="btn btn-primary">保存更改</button>
+                                <button type="button" class="btn btn-secondary" style="margin-left: 12px;">取消</button>
+                            </div>
+                        </form>
+                        
+                        <div style="margin-top: 24px; border-top: 1px solid var(--border-color); padding-top: 24px;">
+                            <h3 style="margin-bottom: 16px;">关联题目统计</h3>
+                            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+                                <div class="stat-card" style="padding: 16px;">
+                                    <div class="stat-card-title">总题目数</div>
+                                    <div class="stat-card-value">127</div>
+                                </div>
+                                <div class="stat-card" style="padding: 16px;">
+                                    <div class="stat-card-title">直接关联题目</div>
+                                    <div class="stat-card-value">42</div>
+                                </div>
+                                <div class="stat-card" style="padding: 16px;">
+                                    <div class="stat-card-title">下级知识点题目</div>
+                                    <div class="stat-card-value">85</div>
+                                </div>
+                            </div>
+                            <div style="margin-top: 16px;">
+                                <button class="btn btn-secondary">查看关联题目</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 页脚 -->
+            <div class="footer">
+                国网考试题库后台管理系统 &copy; 2024 国家电网有限公司
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* 树形结构样式 */
+        .category-tree {
+            font-size: 14px;
+        }
+        
+        .tree-item {
+            margin-bottom: 2px;
+        }
+        
+        .tree-item-header {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .tree-item-header:hover {
+            background-color: rgba(28, 100, 242, 0.05);
+        }
+        
+        .tree-toggle {
+            width: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 4px;
+        }
+        
+        .tree-icon {
+            margin-right: 8px;
+            color: var(--primary-color);
+        }
+        
+        .tree-label {
+            flex: 1;
+        }
+        
+        .tree-actions {
+            display: none;
+        }
+        
+        .tree-item-header:hover .tree-actions {
+            display: flex;
+        }
+        
+        .btn-icon {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-light);
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+        }
+        
+        .btn-icon:hover {
+            background-color: rgba(28, 100, 242, 0.1);
+            color: var(--primary-color);
+        }
+        
+        .tree-children {
+            margin-left: 20px;
+            border-left: 1px dashed var(--border-color);
+            padding-left: 10px;
+        }
+    </style>
+
+    <script>
+        // 侧边栏切换
+        document.getElementById('toggle-sidebar').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.toggle('sidebar-collapsed');
+        });
+        
+        // 树形结构切换
+        document.querySelectorAll('.tree-toggle').forEach(function(toggle) {
+            toggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const header = this.parentElement;
+                const item = header.parentElement;
+                const children = item.querySelector('.tree-children');
+                
+                if (children) {
+                    const isExpanded = this.querySelector('i').classList.contains('bi-chevron-down');
+                    this.querySelector('i').classList.remove(isExpanded ? 'bi-chevron-down' : 'bi-chevron-right');
+                    this.querySelector('i').classList.add(isExpanded ? 'bi-chevron-right' : 'bi-chevron-down');
+                    
+                    children.style.display = isExpanded ? 'none' : 'block';
+                    
+                    if (!isExpanded) {
+                        const folderIcon = header.querySelector('.tree-icon i');
+                        if (folderIcon.classList.contains('bi-folder2')) {
+                            folderIcon.classList.remove('bi-folder2');
+                            folderIcon.classList.add('bi-folder2-open');
+                        }
+                    } else {
+                        const folderIcon = header.querySelector('.tree-icon i');
+                        if (folderIcon.classList.contains('bi-folder2-open')) {
+                            folderIcon.classList.remove('bi-folder2-open');
+                            folderIcon.classList.add('bi-folder2');
+                        }
+                    }
+                }
+            });
+        });
+        
+        // 点击树项目加载详情
+        document.querySelectorAll('.tree-item-header').forEach(function(header) {
+            header.addEventListener('click', function() {
+                // 实际应用中这里应该加载对应分类的详情
+                console.log('加载分类详情: ' + this.querySelector('.tree-label').textContent);
+            });
+        });
+    </script>
+</body>
+</html> 

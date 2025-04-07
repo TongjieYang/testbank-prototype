@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>国网考试题库后台管理系统 - 题目管理</title>
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+    <div class="layout">
+        <!-- 侧边栏 -->
+        <div class="sidebar">
+            <div class="system-logo">
+                <img src="https://via.placeholder.com/32x32?text=Logo" alt="Logo">
+                <span class="system-logo-text">国网考试题库</span>
+            </div>
+            <ul class="menu">
+                <li class="menu-item">
+                    <a href="dashboard.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-speedometer2"></i></span>
+                        <span class="menu-text">仪表盘</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="category-management.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-folder2"></i></span>
+                        <span class="menu-text">分类管理</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="question-management.html" class="menu-link active">
+                        <span class="menu-icon"><i class="bi bi-file-earmark-text"></i></span>
+                        <span class="menu-text">题目管理</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="tag-management.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-tags"></i></span>
+                        <span class="menu-text">标签管理</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="activation-code.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-key"></i></span>
+                        <span class="menu-text">激活码管理</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="user-management.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-people"></i></span>
+                        <span class="menu-text">用户管理</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="data-analysis.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-bar-chart"></i></span>
+                        <span class="menu-text">数据分析</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="system-settings.html" class="menu-link">
+                        <span class="menu-icon"><i class="bi bi-gear"></i></span>
+                        <span class="menu-text">系统设置</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 主内容区 -->
+        <div class="main-content">
+            <!-- 顶部导航栏 -->
+            <div class="navbar">
+                <div class="nav-left">
+                    <button class="btn btn-secondary" id="toggle-sidebar">
+                        <i class="bi bi-list"></i>
+                    </button>
+                    <div class="breadcrumb">
+                        <div class="breadcrumb-item"><a href="dashboard.html">首页</a></div>
+                        <div class="breadcrumb-item active">题目管理</div>
+                    </div>
+                </div>
+                <div class="nav-right">
+                    <div class="search-box">
+                        <span class="search-icon"><i class="bi bi-search"></i></span>
+                        <input type="text" class="search-input" placeholder="搜索题目...">
+                    </div>
+                    <div class="user-dropdown" style="margin-left: 20px;">
+                        <span><i class="bi bi-person-circle"></i> 管理员 <i class="bi bi-chevron-down"></i></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 内容区域 -->
+            <div class="content">
+                <div class="page-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                    <h1>题目管理</h1>
+                    <div>
+                        <button class="btn btn-secondary" style="margin-right: 12px;">
+                            <i class="bi bi-upload"></i> 导入题目
+                        </button>
+                        <button class="btn btn-secondary" style="margin-right: 12px;">
+                            <i class="bi bi-download"></i> 导出题目
+                        </button>
+                        <button class="btn btn-primary" id="add-question">
+                            <i class="bi bi-plus"></i> 新增题目
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 筛选器 -->
+                <div class="card" style="margin-bottom: 24px;">
+                    <div class="card-header">
+                        <div class="card-title">筛选条件</div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 16px;">
+                        <div class="form-item" style="margin-bottom: 8px;">
+                            <label for="filter-category">所属分类</label>
+                            <select id="filter-category">
+                                <option value="">所有分类</option>
+                                <option value="1">电力系统基础</option>
+                                <option value="2">配电技术</option>
+                                <option value="3">安全管理</option>
+                                <option value="4" selected>电力自动化</option>
+                            </select>
+                        </div>
+                        <div class="form-item" style="margin-bottom: 8px;">
+                            <label for="filter-type">题目类型</label>
+                            <select id="filter-type">
+                                <option value="">所有类型</option>
+                                <option value="single" selected>单选题</option>
+                                <option value="multiple">多选题</option>
+                                <option value="judge">判断题</option>
+                                <option value="fill">填空题</option>
+                                <option value="essay">简答题</option>
+                            </select>
+                        </div>
+                        <div class="form-item" style="margin-bottom: 8px;">
+                            <label for="filter-difficulty">难度等级</label>
+                            <select id="filter-difficulty">
+                                <option value="">所有难度</option>
+                                <option value="1">1级（简单）</option>
+                                <option value="2">2级</option>
+                                <option value="3" selected>3级（中等）</option>
+                                <option value="4">4级</option>
+                                <option value="5">5级（困难）</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 16px;">
+                        <div class="form-item" style="margin-bottom: 8px;">
+                            <label for="filter-knowledge">知识点</label>
+                            <select id="filter-knowledge">
+                                <option value="">所有知识点</option>
+                                <option value="1" selected>过电流保护</option>
+                                <option value="2">阻抗继电器</option>
+                                <option value="3">方向元件</option>
+                                <option value="4">差动保护</option>
+                            </select>
+                        </div>
+                        <div class="form-item" style="margin-bottom: 8px;">
+                            <label for="filter-status">状态</label>
+                            <select id="filter-status">
+                                <option value="">所有状态</option>
+                                <option value="draft">草稿</option>
+                                <option value="review">待审核</option>
+                                <option value="published" selected>已发布</option>
+                                <option value="archived">已归档</option>
+                            </select>
+                        </div>
+                        <div class="form-item" style="margin-bottom: 8px;">
+                            <label for="filter-tag">标签</label>
+                            <select id="filter-tag">
+                                <option value="">所有标签</option>
+                                <option value="1">核心考点</option>
+                                <option value="2" selected>易错题</option>
+                                <option value="3">历年真题</option>
+                                <option value="4">综合应用</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: flex-end;">
+                        <button class="btn btn-secondary" style="margin-right: 12px;">重置</button>
+                        <button class="btn btn-primary">应用筛选</button>
+                    </div>
+                </div>
+                
+                <!-- 题目列表 -->
+                <div class="card">
+                    <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+                        <div class="card-title">题目列表</div>
+                        <div>
+                            <span style="margin-right: 16px;">共 42 条记录</span>
+                            <button class="btn btn-secondary btn-sm" style="margin-right: 8px;">
+                                <i class="bi bi-arrow-repeat"></i> 刷新
+                            </button>
+                            <div class="dropdown" style="display: inline-block;">
+                                <button class="btn btn-secondary btn-sm">
+                                    批量操作 <i class="bi bi-chevron-down"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th style="width: 40px;">
+                                    <input type="checkbox" id="select-all">
+                                </th>
+                                <th style="width: 80px;">ID</th>
+                                <th style="width: 80px;">类型</th>
+                                <th>题目内容</th>
+                                <th style="width: 120px;">所属知识点</th>
+                                <th style="width: 80px;">难度</th>
+                                <th style="width: 80px;">状态</th>
+                                <th style="width: 120px;">更新时间</th>
+                                <th style="width: 120px;">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- 题目1 -->
+                            <tr>
+                                <td><input type="checkbox" class="select-item"></td>
+                                <td>PA001</td>
+                                <td><span class="tag tag-primary">单选题</span></td>
+                                <td>下列哪种保护不属于过电流保护范畴？</td>
+                                <td>过电流保护</td>
+                                <td>
+                                    <div class="difficulty-indicator">
+                                        <span class="active"></span>
+                                        <span class="active"></span>
+                                        <span class="active"></span>
+                                        <span></span>
+                                        <span></span>
+                                    </div>
+                                </td>
+                                <td><span class="tag tag-success">已发布</span></td>
+                                <td>2024-04-07</td>
+                                <td>
+                                    <button class="btn-icon" title="查看"><i class="bi bi-eye"></i></button>
+                                    <button class="btn-icon" title="编辑"><i class="bi bi-pencil"></i></button>
+                                    <button class="btn-icon" title="删除"><i class="bi bi-trash"></i></button>
+                                </td>
+                            </tr>
+                            
+                            <!-- 题目2 -->
+                            <tr>
+                                <td><input type="checkbox" class="select-item"></td>
+                                <td>PA002</td>
+                                <td><span class="tag tag-warning">多选题</span></td>
+                                <td>关于三段式电流保护，下列说法正确的有：</td>
+                                <td>过电流保护</td>
+                                <td>
+                                    <div class="difficulty-indicator">
+                                        <span class="active"></span>
+                                        <span class="active"></span>
+                                        <span class="active"></span>
+                                        <span class="active"></span>
+                                        <span></span>
+                                    </div>
+                                </td>
+                                <td><span class="tag tag-success">已发布</span></td>
+                                <td>2024-04-07</td>
+                                <td>
+                                    <button class="btn-icon" title="查看"><i class="bi bi-eye"></i></button>
+                                    <button class="btn-icon" title="编辑"><i class="bi bi-pencil"></i></button>
+                                    <button class="btn-icon" title="删除"><i class="bi bi-trash"></i></button>
+                                </td>
+                            </tr>
+                            
+                            <!-- 题目3 -->
+                            <tr>
+                                <td><input type="checkbox" class="select-item"></td>
+                                <td>PA003</td>
+                                <td><span class="tag tag-primary">单选题</span></td>
+                                <td>某220kV输电线路距离保护的第二段保护范围为：</td>
+                                <td>阻抗继电器</td>
+                                <td>
+                                    <div class="difficulty-indicator">
+                                        <span class="active"></span>
+                                        <span class="active"></span>
+                                        <span class="active"></span>
+                                        <span class="active"></span>
+                                        <span></span>
+                                    </div>
+                                </td>
+                                <td><span class="tag tag-success">已发布</span></td>
+                                <td>2024-04-07</td>
+                                <td>
+                                    <button class="btn-icon" title="查看"><i class="bi bi-eye"></i></button>
+                                    <button class="btn-icon" title="编辑"><i class="bi bi-pencil"></i></button>
+                                    <button class="btn-icon" title="删除"><i class="bi bi-trash"></i></button>
+                                </td>
+                            </tr>
+                            
+                            <!-- 题目4 -->
+                            <tr>
+                                <td><input type="checkbox" class="select-item"></td>
+                                <td>PA004</td>
+                                <td><span class="tag tag-info">判断题</span></td>
+                                <td>距离保护的方向元件可以判断故障发生的方向，但不能判断故障的距离。</td>
+                                <td>方向元件</td>
+                                <td>
+                                    <div class="difficulty-indicator">
+                                        <span class="active"></span>
+                                        <span class="active"></span>
+                                        <span class="active"></span>
+                                        <span></span>
+                                        <span></span>
+                                    </div>
+                                </td>
+                                <td><span class="tag tag-success">已发布</span></td>
+                                <td>2024-04-07</td>
+                                <td>
+                                    <button class="btn-icon" title="查看"><i class="bi bi-eye"></i></button>
+                                    <button class="btn-icon" title="编辑"><i class="bi bi-pencil"></i></button>
+                                    <button class="btn-icon" title="删除"><i class="bi bi-trash"></i></button>
+                                </td>
+                            </tr>
+                            
+                            <!-- 题目5 -->
+                            <tr>
+                                <td><input type="checkbox" class="select-item"></td>
+                                <td>PA005</td>
+                                <td><span class="tag tag-primary">单选题</span></td>
+                                <td>关于母线差动保护的工作原理，下列说法错误的是：</td>
+                                <td>差动保护</td>
+                                <td>
+                                    <div class="difficulty-indicator">
+                                        <span class="active"></span>
+                                        <span class="active"></span>
+                                        <span class="active"></span>
+                                        <span></span>
+                                        <span></span>
+                                    </div>
+                                </td>
+                                <td><span class="tag tag-warning">待审核</span></td>
+                                <td>2024-04-07</td>
+                                <td>
+                                    <button class="btn-icon" title="查看"><i class="bi bi-eye"></i></button>
+                                    <button class="btn-icon" title="编辑"><i class="bi bi-pencil"></i></button>
+                                    <button class="btn-icon" title="删除"><i class="bi bi-trash"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <!-- 分页 -->
+                    <div style="display: flex; justify-content: space-between; padding: 16px;">
+                        <div>
+                            <label style="margin-right: 8px;">每页显示:</label>
+                            <select style="width: 80px;">
+                                <option>10</option>
+                                <option selected>20</option>
+                                <option>50</option>
+                                <option>100</option>
+                            </select>
+                        </div>
+                        <div class="pagination">
+                            <button class="btn-page" disabled><i class="bi bi-chevron-double-left"></i></button>
+                            <button class="btn-page" disabled><i class="bi bi-chevron-left"></i></button>
+                            <button class="btn-page active">1</button>
+                            <button class="btn-page">2</button>
+                            <button class="btn-page">3</button>
+                            <span>...</span>
+                            <button class="btn-page">10</button>
+                            <button class="btn-page"><i class="bi bi-chevron-right"></i></button>
+                            <button class="btn-page"><i class="bi bi-chevron-double-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 页脚 -->
+            <div class="footer">
+                国网考试题库后台管理系统 &copy; 2024 国家电网有限公司
+            </div>
+        </div>
+    </div>
+    
+    <!-- 题目编辑弹窗 -->
+    <div class="modal" id="question-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">编辑题目</h3>
+                    <button class="modal-close"><i class="bi bi-x-lg"></i></button>
+                </div>
+                <div class="modal-body">
+                    <form id="question-form">
+                        <div class="form-item">
+                            <label for="question-type">题目类型</label>
+                            <select id="question-type" name="type">
+                                <option value="single" selected>单选题</option>
+                                <option value="multiple">多选题</option>
+                                <option value="judge">判断题</option>
+                                <option value="fill">填空题</option>
+                                <option value="essay">简答题</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-item">
+                            <label for="question-content">题目内容</label>
+                            <textarea id="question-content" name="content" rows="4" placeholder="请输入题目内容">下列哪种保护不属于过电流保护范畴？</textarea>
+                        </div>
+                        
+                        <div class="options-container">
+                            <label>选项</label>
+                            
+                            <div class="option-item">
+                                <div class="option-header">
+                                    <span class="option-label">A</span>
+                                    <label class="checkbox-label">
+                                        <input type="radio" name="correct-option" value="A">
+                                        <span>正确答案</span>
+                                    </label>
+                                </div>
+                                <div class="option-content">
+                                    <textarea name="option-A" rows="2" placeholder="请输入选项内容">定时限过电流保护</textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="option-item">
+                                <div class="option-header">
+                                    <span class="option-label">B</span>
+                                    <label class="checkbox-label">
+                                        <input type="radio" name="correct-option" value="B">
+                                        <span>正确答案</span>
+                                    </label>
+                                </div>
+                                <div class="option-content">
+                                    <textarea name="option-B" rows="2" placeholder="请输入选项内容">反时限过电流保护</textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="option-item">
+                                <div class="option-header">
+                                    <span class="option-label">C</span>
+                                    <label class="checkbox-label">
+                                        <input type="radio" name="correct-option" value="C">
+                                        <span>正确答案</span>
+                                    </label>
+                                </div>
+                                <div class="option-content">
+                                    <textarea name="option-C" rows="2" placeholder="请输入选项内容">电流速断保护</textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="option-item">
+                                <div class="option-header">
+                                    <span class="option-label">D</span>
+                                    <label class="checkbox-label">
+                                        <input type="radio" name="correct-option" value="D" checked>
+                                        <span>正确答案</span>
+                                    </label>
+                                </div>
+                                <div class="option-content">
+                                    <textarea name="option-D" rows="2" placeholder="请输入选项内容">零序电压保护</textarea>
+                                </div>
+                            </div>
+                            
+                            <div style="margin-top: 8px;">
+                                <button type="button" class="btn btn-secondary btn-sm">
+                                    <i class="bi bi-plus"></i> 添加选项
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-item">
+                            <label for="question-explanation">解析</label>
+                            <textarea id="question-explanation" name="explanation" rows="4" placeholder="请输入题目解析">零序电压保护是一种电压型保护，用于检测系统中的零序电压，主要用于检测接地故障，不属于过电流保护范畴。定时限过电流保护(A)、反时限过电流保护(B)和电流速断保护(C)都是基于电流大小来判断故障的保护方式，属于过电流保护范畴。</textarea>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                            <div class="form-item">
+                                <label for="question-difficulty">难度等级</label>
+                                <select id="question-difficulty" name="difficulty">
+                                    <option value="1">1级（简单）</option>
+                                    <option value="2">2级</option>
+                                    <option value="3" selected>3级（中等）</option>
+                                    <option value="4">4级</option>
+                                    <option value="5">5级（困难）</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-item">
+                                <label for="question-status">状态</label>
+                                <select id="question-status" name="status">
+                                    <option value="draft">草稿</option>
+                                    <option value="review">待审核</option>
+                                    <option value="published" selected>已发布</option>
+                                    <option value="archived">已归档</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-item">
+                            <label for="question-knowledge">关联知识点</label>
+                            <select id="question-knowledge" name="knowledgePoint" multiple>
+                                <option value="1" selected>过电流保护</option>
+                                <option value="2">阻抗继电器</option>
+                                <option value="3">方向元件</option>
+                                <option value="4">差动保护</option>
+                            </select>
+                            <div style="margin-top: 8px;">
+                                <button type="button" class="btn btn-secondary btn-sm">
+                                    <i class="bi bi-plus"></i> 添加知识点
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-item">
+                            <label>标签</label>
+                            <div class="tag-selector" style="border: 1px solid var(--border-color); padding: 8px; border-radius: 4px;">
+                                <span class="tag tag-primary">易错题 <i class="bi bi-x"></i></span>
+                                <span class="tag tag-primary">继电保护 <i class="bi bi-x"></i></span>
+                                <span class="tag tag-primary">核心考点 <i class="bi bi-x"></i></span>
+                                <span style="display: inline-block; margin-left: 8px;">
+                                    <button class="btn btn-secondary btn-sm">
+                                        <i class="bi bi-plus"></i> 添加标签
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button class="btn btn-primary">保存题目</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* 难度指示器 */
+        .difficulty-indicator {
+            display: flex;
+            gap: 2px;
+        }
+        
+        .difficulty-indicator span {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--border-color);
+        }
+        
+        .difficulty-indicator span.active {
+            background-color: var(--primary-color);
+        }
+        
+        /* 分页样式 */
+        .pagination {
+            display: flex;
+            align-items: center;
+        }
+        
+        .btn-page {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border-color);
+            background-color: var(--white);
+            margin: 0 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        
+        .btn-page:hover {
+            background-color: var(--bg-dark);
+        }
+        
+        .btn-page.active {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-page:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        /* 弹窗样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        .modal.show {
+            display: block;
+        }
+        
+        .modal-dialog {
+            max-width: 800px;
+            margin: 40px auto;
+        }
+        
+        .modal-content {
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: var(--shadow-large);
+        }
+        
+        .modal-header {
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-title {
+            margin: 0;
+            color: var(--title-color);
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+        
+        .modal-body {
+            padding: 24px;
+            max-height: calc(100vh - 200px);
+            overflow-y: auto;
+        }
+        
+        .modal-footer {
+            padding: 16px 24px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+        
+        /* 选项样式 */
+        .options-container {
+            margin-bottom: 16px;
+        }
+        
+        .option-item {
+            margin-bottom: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+        }
+        
+        .option-header {
+            padding: 8px 12px;
+            background-color: var(--bg-dark);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+        }
+        
+        .option-label {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .option-content {
+            padding: 8px 12px;
+        }
+        
+        .option-content textarea {
+            width: 100%;
+            border: none;
+            resize: vertical;
+            padding: 4px 0;
+        }
+        
+        .option-content textarea:focus {
+            outline: none;
+        }
+    </style>
+
+    <script>
+        // 侧边栏切换
+        document.getElementById('toggle-sidebar').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.toggle('sidebar-collapsed');
+        });
+        
+        // 全选/取消全选
+        document.getElementById('select-all').addEventListener('change', function() {
+            const checked = this.checked;
+            document.querySelectorAll('.select-item').forEach(function(item) {
+                item.checked = checked;
+            });
+        });
+        
+        // 显示题目编辑弹窗
+        document.getElementById('add-question').addEventListener('click', function() {
+            document.getElementById('question-modal').classList.add('show');
+        });
+        
+        // 编辑按钮
+        document.querySelectorAll('.bi-pencil').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                document.getElementById('question-modal').classList.add('show');
+            });
+        });
+        
+        // 关闭弹窗
+        document.querySelector('.modal-close').addEventListener('click', function() {
+            document.getElementById('question-modal').classList.remove('show');
+        });
+        
+        document.querySelector('[data-dismiss="modal"]').addEventListener('click', function() {
+            document.getElementById('question-modal').classList.remove('show');
+        });
+        
+        // 当点击modal背景时关闭modal
+        document.getElementById('question-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html> 
