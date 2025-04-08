@@ -9,6 +9,8 @@
     min-height: calc(100vh - 70px) !important;
     width: 100%;
     box-sizing: border-box;
+    max-width: 430px;
+    margin: 0 auto;
 }
 
 /* 底部导航栏样式 */
@@ -18,7 +20,7 @@
     left: 0;
     right: 0;
     width: 100%;
-    max-width: 640px;
+    max-width: 430px;
     margin: 0 auto;
     height: 60px;
     display: flex;
@@ -88,4 +90,28 @@
 .interactive-card:active {
     transform: scale(0.98);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* 手机模拟器样式 - 在电脑浏览器中模拟手机显示效果 */
+body {
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 450px;
+    height: 100vh;
+    background-color: white;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    z-index: -1;
 } 
