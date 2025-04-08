@@ -17,8 +17,10 @@
 .bottom-nav {
     position: fixed;
     bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
     width: 100%;
     max-width: 430px;
     height: 60px;
@@ -59,6 +61,14 @@
     color: #6b7280;
     transition: all 0.2s ease;
     box-sizing: border-box;
+    overflow: hidden;
+}
+
+.bottom-nav-item div {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 /* 激活状态 */
